@@ -12,5 +12,13 @@ package spaceshipbuilder;
 public interface ShipPiece {
     
     public String getSprite();
+    public double getMass();
+    public double getMinX();
+    public double getMinY();
+    public double getX();
+    public double getY();
+    public double setX();
+    public double setY();
+
     
 }
