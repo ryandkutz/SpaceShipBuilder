@@ -9,9 +9,8 @@ package spaceshipbuilder;
  *
  * @author Gomez_866923
  */
-class ShipPiece {
+public interface ShipPiece {
     
+    public String getSprite();
     
-    //Test comment.
-    //Test comment 2.
 }
