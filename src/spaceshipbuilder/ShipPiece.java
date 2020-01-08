@@ -11,4 +11,6 @@ package spaceshipbuilder;
  */
 class ShipPiece {
     
+    
+    //Test comment.
 }
