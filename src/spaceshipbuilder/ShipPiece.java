@@ -9,16 +9,31 @@ package spaceshipbuilder;
  *
  * @author Gomez_866923
  */
-public interface ShipPiece {
+public class ShipPiece {
+    
+    private double x;
+    private double y;
+    public ShipPiece() {
+        x = 0;
+        y = 0;
+    }
     
     public String getSprite();
     public double getMass();
     public double getMinX();
     public double getMinY();
-    public double getX();
-    public double getY();
-    public double setX();
-    public double setY();
+    public double getX() {
+        return x;
+    }
+    public double getY() {
+        return y;
+    }
+    public void setX(double x) {
+        this.x = x;
+    }
+    public void setY(double y) {
+        this.y = y;
+    }
 
     
 }
