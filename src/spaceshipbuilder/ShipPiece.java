@@ -9,7 +9,7 @@ package spaceshipbuilder;
  *
  * @author Gomez_866923
  */
-public class ShipPiece {
+public abstract class ShipPiece {
     
     private double x;
     private double y;
