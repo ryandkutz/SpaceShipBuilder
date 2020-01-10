@@ -13,27 +13,44 @@ public class ShipPiece {
     
     private double x;
     private double y;
+    private double mass;
+    
     public ShipPiece() {
         x = 0;
         y = 0;
+        mass = 0;
+    }
+
+    public ShipPiece(double x, double y, double mass) {
+        this.x = x;
+        this.y = y;
+        this.mass = mass;
     }
     
-    public String getSprite();
-    public double getMass();
-    public double getMinX();
-    public double getMinY();
     public double getX() {
         return x;
     }
+    
     public double getY() {
         return y;
     }
+    
+    public double getMass() {
+        return mass;
+    }
+    
     public void setX(double x) {
         this.x = x;
     }
+    
     public void setY(double y) {
         this.y = y;
     }
+
+    public void setMass(double mass) {
+        this.mass = mass;
+    }
+    
 
     
 }
