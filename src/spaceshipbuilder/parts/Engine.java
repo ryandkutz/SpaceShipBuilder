@@ -8,6 +8,31 @@ package spaceshipbuilder.parts;
  *
  * @author kutz_865792
  */
+
+
+
 public class Engine extends ShipPiece {
+    
+    private double thrust;
+    private double fuelUsage;
+
+    public Engine(double thrust, double fuelUsage) {
+        this.thrust = thrust;
+        this.fuelUsage = fuelUsage;
+    }
+
+    public Engine(double thrust, double fuelUsage, double x, double y, double mass) {
+        super(x, y, mass);
+        this.thrust = thrust;
+        this.fuelUsage = fuelUsage;
+    }
+
+    
+    
+    
+    
+    
+    
+    
     
 }
