@@ -5,7 +5,7 @@
  */
 package spaceshipbuilder;
 
-import spaceshipbuilder.parts.ShipPiece;
+import spaceshipbuilder.parts.*;
 
 /**
  *
@@ -13,4 +13,10 @@ import spaceshipbuilder.parts.ShipPiece;
  */
 public class Spaceship {
     private ShipPiece[] shipParts;
+
+    public Spaceship(ShipPiece[] shipParts) {
+        this.shipParts = shipParts;
+    }
+    
+    
 }
