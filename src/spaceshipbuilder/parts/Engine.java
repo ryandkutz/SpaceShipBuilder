@@ -3,14 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package spaceshipbuilder;
-
-import spaceshipbuilder.parts.ShipPiece;
-
+package spaceshipbuilder.parts;
 /**
  *
- * @author Gomez_866923
+ * @author kutz_865792
  */
-public class Spaceship {
-    private ShipPiece[] shipParts;
+public class Engine extends ShipPiece {
+    
 }
