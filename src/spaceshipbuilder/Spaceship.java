@@ -25,6 +25,7 @@ public class Spaceship {
                 mass += part.getMass();
             }
         }
+        return mass;
     }
     
 }
