@@ -12,11 +12,19 @@ import spaceshipbuilder.parts.*;
  * @author Gomez_866923
  */
 public class Spaceship {
-    private ShipPiece[] shipParts;
+    private ShipPiece[][] shipParts;
 
-    public Spaceship(ShipPiece[] shipParts) {
+    public Spaceship(ShipPiece[][] shipParts) {
         this.shipParts = shipParts;
     }
     
+    public double getMass() {
+        double mass = 0;
+        for(ShipPiece[] row: shipParts) {
+            for(ShipPiece part: row) {
+                mass += part.getMass();
+            }
+        }
+    }
     
 }
