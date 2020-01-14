@@ -40,10 +40,9 @@ public class MainMenuController implements Initializable {
         stage.show();
         // Hide this current window (if this is what you want)
         ((Node)(event.getSource())).getScene().getWindow().hide();
-        final Canvas canvas = new Canvas(250,250);
-        GraphicsContext ctx = canvas.getGraphicsContext2D();
+        final Canvas canvas = new Canvas(400,400);
         root.getChildren().add(canvas);
-        Game g = new Game(ctx);
+        Game g = new Game(canvas);
         g.loop();
     }
     
