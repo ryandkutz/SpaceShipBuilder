@@ -18,10 +18,13 @@ import javafx.scene.paint.Color;
  */
 public class Game {
     
+    private Canvas canvas;
     private GraphicsContext ctx;
+    
 
-    public Game(GraphicsContext ctx) {
-        this.ctx = ctx;
+    public Game(Canvas canvas) {
+        this.canvas = canvas;
+        ctx = canvas.getGraphicsContext2D();
     }
     
     
@@ -37,11 +40,14 @@ public class Game {
             @Override
             public void handle(long now) {
                 x++;
+                y--;
                 ctx.setFill(Color.WHITE);
-                ctx.fillRect(0, 0, 250, 250);
-                ctx.drawImage(i, 40, 40);
+                ctx.fillRect(0, 0, 400, 400);
+                ctx.drawImage(i, (y%400)-400, 0);
+                ctx.drawImage(i, y%400, 0);
+                ctx.drawImage(i, (y%400) + 400, 0);
                 ctx.setFill(Color.BLUE);
-                ctx.fillRect(x,y,20,20);
+                ctx.fillRect(x%400,100,20,20);
             }
             
         };
