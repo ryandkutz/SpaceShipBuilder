@@ -9,6 +9,7 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 /**
@@ -26,8 +27,10 @@ public class Game {
     
     public void loop() {
         
+        Image i = new Image("Assets/Clouds.png");
         ctx.setFill(Color.BLUE);
         ctx.fillRect(0,0,20,20);
+        
         AnimationTimer h = new AnimationTimer() {
             double x = 0;
             double y = 0;
@@ -36,6 +39,7 @@ public class Game {
                 x++;
                 ctx.setFill(Color.WHITE);
                 ctx.fillRect(0, 0, 250, 250);
+                ctx.drawImage(i, 40, 40);
                 ctx.setFill(Color.BLUE);
                 ctx.fillRect(x,y,20,20);
             }
