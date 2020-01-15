@@ -15,7 +15,6 @@ public class Spaceship {
     private ShipPiece[][] shipParts;
     private double x;
     private double y;
-    private double mass;
     private double rotation;
     private String name;
 
@@ -23,12 +22,11 @@ public class Spaceship {
         shipParts = new ShipPiece[size][size];
         x = 0;
         y = 0;
-        mass = 0;
         rotation = 0;
         this.name = name;
     }
     
-    public double getInitialMass() {
+    public double getMass() {
         //Returns the mass at the start of a launch
         double mass = 0;
         for(ShipPiece[] row: shipParts) {
@@ -37,6 +35,30 @@ public class Spaceship {
             }
         }
         return mass;
+    }
+    
+    public double getCenterMassX() {
+        //X position of center of mass relative to the x of the ship
+        double x = 0;
+        for(ShipPiece[] row: shipParts) {
+            for(ShipPiece part: row) {
+                x += part.getX() * part.getMass();
+            }
+        }
+        x /= getMass();
+        return x;
+    }
+    
+    public double getCenterMassY() {
+        //Y position of center of mass relative to the y of the ship
+        double y = 0;
+        for(ShipPiece[] row: shipParts) {
+            for(ShipPiece part: row) {
+                y += part.getY() * part.getMass();
+            }
+        }
+        y /= getMass();
+        return y;
     }
 
     public ShipPiece[][] getShipParts() {
@@ -51,9 +73,6 @@ public class Spaceship {
         return y;
     }
 
-    public double getMass() {
-        return mass;
-    }
 
     public double getRotation() {
         return rotation;
