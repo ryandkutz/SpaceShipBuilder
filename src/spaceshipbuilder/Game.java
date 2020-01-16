@@ -66,22 +66,25 @@ public class Game {
     }
     
     public void loop() {
+        //This is the main game loop, ideally needs a delta
         Image i = new Image("Assets/Clouds.png");
         AnimationTimer h = new AnimationTimer() {
             long last = 0;
             @Override
             public void handle(long now) {
-                long fps = 1000000000 / (now - last);
+                //Delta should be 60ths of secodns past
+                double delta = 60 * (double)(now - last) / (1e9);
+                double fps = 1000000000 / ((double)now - (double)last);
                 last = now;
-                if(east) x += 5;
-                if(west) x -= 5;
-                if(north) y += 5;
-                if(south) y -= 5;
+                if(east) x += 5 * delta;
+                if(west) x -= 5 * delta;
+                if(north) y += 5 * delta;
+                if(south) y -= 5 * delta;
                 ctx.setFill(Color.WHITE);
                 ctx.fillRect(0, 0, 400, 400);
                 drawBackground();
                 ctx.setFill(Color.BLACK);
-                ctx.fillText(Long.toString(fps), 10, 10);
+                ctx.fillText(Double.toString(fps), 10, 10);
                 ctx.setFill(Color.BLUE);
                 ctx.fillRect(190,190,20,20);
             }
