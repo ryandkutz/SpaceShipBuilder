@@ -32,6 +32,8 @@ public class Game {
         this.canvas = canvas;
         ctx = canvas.getGraphicsContext2D();
         scene = canvas.getScene();
+        
+        //Gettign keyboard presses and releases to controll direction
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -67,7 +69,7 @@ public class Game {
     
     public void loop() {
         //This is the main game loop, ideally needs a delta
-        Image i = new Image("Assets/Clouds.png");
+        Image tank = new Image("Assets/FuelTank.png");
         AnimationTimer h = new AnimationTimer() {
             long last = 0;
             @Override
@@ -85,8 +87,7 @@ public class Game {
                 drawBackground();
                 ctx.setFill(Color.BLACK);
                 ctx.fillText(Double.toString(fps), 10, 10);
-                ctx.setFill(Color.BLUE);
-                ctx.fillRect(190,190,20,20);
+                ctx.drawImage(tank, 175, 175);
             }
             
         };
