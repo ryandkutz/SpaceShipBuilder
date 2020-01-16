@@ -14,6 +14,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import spaceshipbuilder.parts.ShipPart;
 
 /**
  *
@@ -57,6 +58,15 @@ public class Game {
             }
         });
         
+    }
+    
+    public void drawShip(Spaceship ship) {
+        ShipPart[][] parts = ship.getShipParts();
+        for(ShipPart[] col : parts) {
+            for(ShipPart p : col) {
+                System.out.println("wait");
+            }
+        }
     }
     
     public void drawBackground() {
