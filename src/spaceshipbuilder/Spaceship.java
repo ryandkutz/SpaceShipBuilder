@@ -26,6 +26,14 @@ public class Spaceship {
         this.name = name;
     }
     
+    public Spaceship() {
+        shipParts = new ShipPiece[4][4];
+        x = 0;
+        y = 0;
+        rotation = 0;
+        name = "";
+    }
+    
     public double getMass() {
         //Returns the mass at the start of a launch
         double mass = 0;
