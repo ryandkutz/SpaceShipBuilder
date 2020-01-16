@@ -11,7 +11,7 @@ package spaceshipbuilder.parts;
 
 
 
-public class Engine extends ShipPiece {
+public class Engine extends ShipPart {
     
     private double thrust;
     private double fuelUsage;

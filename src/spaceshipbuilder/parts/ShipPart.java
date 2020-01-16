@@ -9,20 +9,20 @@ package spaceshipbuilder.parts;
  *
  * @author Gomez_866923
  */
-public abstract class ShipPiece {
+public abstract class ShipPart {
     
     //x and y should be relative to the position of the entire ship
     private double x;
     private double y;
     private double mass;
     
-    public ShipPiece() {
+    public ShipPart() {
         x = 0;
         y = 0;
         mass = 0;
     }
 
-    public ShipPiece(double x, double y, double mass) {
+    public ShipPart(double x, double y, double mass) {
         this.x = x;
         this.y = y;
         this.mass = mass;

@@ -12,14 +12,14 @@ import spaceshipbuilder.parts.*;
  * @author Gomez_866923
  */
 public class Spaceship {
-    private ShipPiece[][] shipParts;
+    private ShipPart[][] shipParts;
     private double x;
     private double y;
     private double rotation;
     private String name;
 
     public Spaceship(int size, String name) {
-        shipParts = new ShipPiece[size][size];
+        shipParts = new ShipPart[size][size];
         x = 0;
         y = 0;
         rotation = 0;
@@ -27,7 +27,7 @@ public class Spaceship {
     }
     
     public Spaceship() {
-        shipParts = new ShipPiece[4][4];
+        shipParts = new ShipPart[4][4];
         x = 0;
         y = 0;
         rotation = 0;
@@ -37,8 +37,8 @@ public class Spaceship {
     public double getMass() {
         //Returns the mass at the start of a launch
         double mass = 0;
-        for(ShipPiece[] row: shipParts) {
-            for(ShipPiece part: row) {
+        for(ShipPart[] row: shipParts) {
+            for(ShipPart part: row) {
                 mass += part.getMass();
             }
         }
@@ -48,8 +48,8 @@ public class Spaceship {
     public double getCenterMassX() {
         //X position of center of mass relative to the x of the ship
         double x = 0;
-        for(ShipPiece[] row: shipParts) {
-            for(ShipPiece part: row) {
+        for(ShipPart[] row: shipParts) {
+            for(ShipPart part: row) {
                 x += part.getX() * part.getMass();
             }
         }
@@ -60,8 +60,8 @@ public class Spaceship {
     public double getCenterMassY() {
         //Y position of center of mass relative to the y of the ship
         double y = 0;
-        for(ShipPiece[] row: shipParts) {
-            for(ShipPiece part: row) {
+        for(ShipPart[] row: shipParts) {
+            for(ShipPart part: row) {
                 y += part.getY() * part.getMass();
             }
         }
@@ -69,7 +69,7 @@ public class Spaceship {
         return y;
     }
 
-    public ShipPiece[][] getShipParts() {
+    public ShipPart[][] getShipParts() {
         return shipParts;
     }
 
