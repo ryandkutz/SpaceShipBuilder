@@ -39,7 +39,8 @@ public class Spaceship {
         double mass = 0;
         for(ShipPart[] row: shipParts) {
             for(ShipPart part: row) {
-                mass += part.getMass();
+                if(part != null)
+                    mass += part.getMass();
             }
         }
         return mass;
@@ -50,10 +51,13 @@ public class Spaceship {
         double x = 0;
         for(ShipPart[] row: shipParts) {
             for(ShipPart part: row) {
-                x += part.getX() * part.getMass();
+                if(part != null)
+                    x += part.getX() * part.getMass();
             }
         }
-        x /= getMass();
+        double mass = getMass();
+        if(mass > 0)
+            x /= mass;
         return x;
     }
     
@@ -62,11 +66,26 @@ public class Spaceship {
         double y = 0;
         for(ShipPart[] row: shipParts) {
             for(ShipPart part: row) {
-                y += part.getY() * part.getMass();
+                if(part != null)
+                    y += part.getY() * part.getMass();
             }
         }
-        y /= getMass();
+        double mass = getMass();
+        if(mass > 0)
+            y /= getMass();
         return y;
+    }
+    
+    public double getMomentOfInertia() {
+        //Adds moments of inertias for all ship parts
+        double i = 0;
+        for(ShipPart[] row: shipParts) {
+            for(ShipPart part: row) {
+                if(part != null)
+                    i += part.getMomentOfInertia(getCenterMassX(), getCenterMassY());
+            }
+        }
+        return i;
     }
 
     public ShipPart[][] getShipParts() {
@@ -81,7 +100,6 @@ public class Spaceship {
         return y;
     }
 
-
     public double getRotation() {
         return rotation;
     }
@@ -89,8 +107,6 @@ public class Spaceship {
     public String getName() {
         return name;
     }
-    
-    
     
     public void updateShip() {
         
