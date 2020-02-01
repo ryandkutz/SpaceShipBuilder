@@ -32,10 +32,9 @@ public class MainMenuController implements Initializable {
     }
     
     public void startGame(ActionEvent event) {
-        System.out.println("You clicked me!");
         Group root = new Group();
         Stage stage = new Stage();
-        stage.setTitle("My New Stage Title");
+        stage.setTitle("Have a Good Launch!");
         stage.setScene(new Scene(root, 450, 450));
         stage.show();
         // Hide this current window (if this is what you want)
@@ -44,6 +43,10 @@ public class MainMenuController implements Initializable {
         root.getChildren().add(canvas);
         Game g = new Game(canvas);
         g.loop();
+    }
+    
+    public void startBuilder(ActionEvent event) {
+        
     }
     
 }

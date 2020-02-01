@@ -60,6 +60,14 @@ public class Game {
         
     }
     
+    public void drawBackground() {
+        Image clouds = new Image("Assets/Clouds.png");
+        ctx.drawImage(clouds, -x % 400 + (x > 0 ? 400 : -400), y % 400);
+        ctx.drawImage(clouds, -x % 400, y % 400);
+        ctx.drawImage(clouds, -x % 400 + (x > 0 ? 400 : -400), y % 400 + (y > 0 ? -400 : 400));
+        ctx.drawImage(clouds, -x % 400, y % 400 + (y > 0 ? -400 : 400));
+    }
+    
     public void drawShip(Spaceship ship) {
         ShipPart[][] parts = ship.getShipParts();
         for(ShipPart[] col : parts) {
@@ -69,35 +77,29 @@ public class Game {
         }
     }
     
-    public void drawBackground() {
-        Image clouds = new Image("Assets/Clouds.png");
-        ctx.drawImage(clouds, -x % 400 + (x > 0 ? 400 : -400), y % 400);
-        ctx.drawImage(clouds, -x % 400, y % 400);
-        ctx.drawImage(clouds, -x % 400 + (x > 0 ? 400 : -400), y % 400 + (y > 0 ? -400 : 400));
-        ctx.drawImage(clouds, -x % 400, y % 400 + (y > 0 ? -400 : 400));
+    public void updateParts(double delta) {
+        delta /= 1e7;
+        if(east) x += 2 * delta;
+        if(west) x -= 2 * delta;
+        if(north) y += 2 * delta;
+        if(south) y -= 2 * delta;
     }
     
     public void loop() {
-        //This is the main game loop, ideally needs a delta
-        Image tank = new Image("Assets/FuelTank.png");
+        //This is the main game loop
         AnimationTimer h = new AnimationTimer() {
             long last = 0;
             @Override
             public void handle(long now) {
-                //Delta should be 60ths of secodns past
-                double delta = 60 * (double)(now - last) / (1e9);
+                //Time passed since last call
+                double delta = (now - last);
                 double fps = 1000000000 / ((double)now - (double)last);
                 last = now;
-                if(east) x += 5 * delta;
-                if(west) x -= 5 * delta;
-                if(north) y += 5 * delta;
-                if(south) y -= 5 * delta;
-                ctx.setFill(Color.WHITE);
-                ctx.fillRect(0, 0, 400, 400);
+                updateParts(delta);
                 drawBackground();
+                drawShip(new Spaceship());
                 ctx.setFill(Color.BLACK);
                 ctx.fillText(Double.toString(fps), 10, 10);
-                ctx.drawImage(tank, 175, 175);
             }
             
         };
