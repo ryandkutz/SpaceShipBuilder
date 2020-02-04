@@ -129,14 +129,15 @@ public class Spaceship {
         return name;
     }
     
-    public void updateShip(long delta) {
-        double torque = 0;
+    public void updateShip(double delta) {
+        double torque = 1;
         int r = 0;
+        Vector2D force = new Vector2D(0, -getMass() * 1);
         for(ShipPart[] row: shipParts) {
             int c = 0;
             for(ShipPart part: row) {
                 if(part != null && part instanceof Engine) {
-                    movement.add(((Engine)part).getThrust());
+                    force = force.add(((Engine)part).getThrust());
                     Vector2D cmPosition = new Vector2D(getCenterMassX() - part.getX(), getCenterMassY() - part.getY());
                     //IDK why the vector2D cross product requires 2 vectors, so this might be wrong
                     torque += cmPosition.crossProduct(new Vector2D(0, 0), ((Engine)part).getThrust());
@@ -146,10 +147,11 @@ public class Spaceship {
             r++;
         }
         double alpha = torque / getMomentOfInertia();
-        rotationalVelocity += alpha;
-        rotation += rotationalVelocity;
+        rotationalVelocity += alpha * delta;
+        rotation += rotationalVelocity * delta;
         rotation %= 2 * Math.PI;
-        //position += movement / mass;
-        
+        Vector2D direction = new Vector2D(Math.cos(rotation), Math.sin(rotation));
+        movement.add(direction.scalarMultiply(force.getNorm()));
+        position = position.add(movement.scalarMultiply(delta/getMass()));
     }
 }
