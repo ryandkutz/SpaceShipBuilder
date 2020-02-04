@@ -5,6 +5,8 @@
  */
 package spaceshipbuilder.parts;
 
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+
 /**
  *
  * @author Gomez_866923
@@ -12,48 +14,46 @@ package spaceshipbuilder.parts;
 public abstract class ShipPart {
     
     public final int SIZE = 50;
-    //x and y should be relative to the position of the entire ship
-    private double x;
-    private double y;
+    //Position is relative to the entire ship
+    //Measured from center of the ship to center of the part in pixels, where each part is 50 pixels.
+    Vector2D position;
     private double mass;
     
     public ShipPart() {
-        x = 0;
-        y = 0;
+        position = new Vector2D(0, 0);
         mass = 0;
     }
 
     public ShipPart(double x, double y, double mass) {
-        this.x = x;
-        this.y = y;
+        position = new Vector2D(x, y);
         this.mass = mass;
     }
     
     public double getMomentOfInertia(double massX, double massY) {
         //Uses moment of inertia euation for a plane and parallel axis theorem.
         double center = 1/6 * mass * Math.pow(SIZE, 2);
-        double distanceSq = Math.pow(x - massX, 2) + Math.pow(y - massY, 2);
+        double distanceSq = Math.pow(position.getX() - massX, 2) + Math.pow(position.getY() - massY, 2);
         return center + distanceSq * mass;
     }
     
     public double getX() {
-        return x;
+        return position.getX();
     }
     
     public double getY() {
-        return y;
+        return position.getY();
+    }
+    
+    public void setX(double x) {
+        position = new Vector2D(x, position.getY());
+    }
+    
+    public void setY(double y) {
+        position = new Vector2D(position.getX(), y);
     }
     
     public double getMass() {
         return mass;
-    }
-    
-    public void setX(double x) {
-        this.x = x;
-    }
-    
-    public void setY(double y) {
-        this.y = y;
     }
 
     public void setMass(double mass) {

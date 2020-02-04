@@ -5,6 +5,7 @@
  */
 package spaceshipbuilder;
 
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import spaceshipbuilder.parts.*;
 
 /**
@@ -13,25 +14,33 @@ import spaceshipbuilder.parts.*;
  */
 public class Spaceship {
     private ShipPart[][] shipParts;
-    private double x;
-    private double y;
+    private Vector2D position;
+    //Movement force
+    private Vector2D movement;
+    private double rotationalVelocity;
     private double rotation;
     private String name;
 
     public Spaceship(int size, String name) {
         shipParts = new ShipPart[size][size];
-        x = 0;
-        y = 0;
+        position = new Vector2D(0, 0);
         rotation = 0;
         this.name = name;
+        movement = new Vector2D(0, 0);
     }
     
     public Spaceship() {
         shipParts = new ShipPart[4][4];
-        x = 0;
-        y = 0;
+        position = new Vector2D(0, 0);
         rotation = 0;
         name = "";
+        movement = new Vector2D(0, 0);
+    }
+    
+    public void addPart(int r, int c, ShipPart p) {
+        p.setX((c - (double)(shipParts[r].length - 1) / 2) * p.SIZE);
+        p.setY((r - (double)(shipParts.length - 1) / 2) * p.SIZE);
+        shipParts[r][c] = p;
     }
     
     public double getMass() {
@@ -93,11 +102,23 @@ public class Spaceship {
     }
 
     public double getX() {
-        return x;
+        return position.getX();
     }
 
     public double getY() {
-        return y;
+        return position.getY();
+    }
+    
+    public void setX(double x) {
+        position = new Vector2D(x, position.getY());
+    }
+    
+    public void setY(double y) {
+        position = new Vector2D(position.getX(), y);
+    }
+    
+    public void transform(Vector2D transform) {
+        position.add(transform);
     }
 
     public double getRotation() {
@@ -108,7 +129,27 @@ public class Spaceship {
         return name;
     }
     
-    public void updateShip() {
+    public void updateShip(long delta) {
+        double torque = 0;
+        int r = 0;
+        for(ShipPart[] row: shipParts) {
+            int c = 0;
+            for(ShipPart part: row) {
+                if(part != null && part instanceof Engine) {
+                    movement.add(((Engine)part).getThrust());
+                    Vector2D cmPosition = new Vector2D(getCenterMassX() - part.getX(), getCenterMassY() - part.getY());
+                    //IDK why the vector2D cross product requires 2 vectors, so this might be wrong
+                    torque += cmPosition.crossProduct(new Vector2D(0, 0), ((Engine)part).getThrust());
+                }
+                c++;
+        }
+            r++;
+        }
+        double alpha = torque / getMomentOfInertia();
+        rotationalVelocity += alpha;
+        rotation += rotationalVelocity;
+        rotation %= 2 * Math.PI;
+        //position += movement / mass;
         
     }
 }

@@ -72,7 +72,7 @@ public class Game {
         ShipPart[][] parts = ship.getShipParts();
         for(ShipPart[] col : parts) {
             for(ShipPart p : col) {
-                System.out.println("wait");
+                //Not finished
             }
         }
     }
