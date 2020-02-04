@@ -20,6 +20,7 @@ public class Engine extends ShipPart {
     private double fuelUsage;
 
     public Engine(Vector2D thrust, double fuelUsage) {
+        super();
         this.thrust = thrust;
         this.fuelUsage = fuelUsage;
     }
