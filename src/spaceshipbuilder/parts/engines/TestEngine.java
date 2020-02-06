@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package spaceshipbuilder.parts.engines;
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+import com.badlogic.gdx.math.Vector2;
 import spaceshipbuilder.parts.*;
 /**
  *
@@ -16,6 +16,6 @@ public class TestEngine extends Engine {
     
     public TestEngine(int x, int y)
     {
-        super(x, y, new Vector2D(0, 10), 10, 10);
+        super(x, y, new Vector2(0, 10), 10, 10);
     }
 }

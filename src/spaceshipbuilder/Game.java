@@ -5,6 +5,7 @@
  */
 package spaceshipbuilder;
 
+import com.badlogic.gdx.math.Vector2;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -14,7 +15,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import spaceshipbuilder.parts.Engine;
 import spaceshipbuilder.parts.ShipPart;
 
@@ -89,7 +89,7 @@ public class Game {
     
     public void loop() {
         Spaceship s = new Spaceship();
-        Engine e = new Engine(new Vector2D(0, 20), 0);
+        Engine e = new Engine(new Vector2(0, 20), 0);
         e.setMass(10);
         s.addPart(0, 0, e);
         //This is the main game loop
@@ -99,9 +99,9 @@ public class Game {
             public void handle(long now) {
                 //Time passed since last call
                 double delta = (now - last);
-                double fps = 1000000000 / ((double)now - (double)last);
+                float fps = 1000000000 / ((float)now - (float)last);
                 last = now;
-                s.updateShip(delta / 1e7);
+                s.updateShip((float)(delta / 1e7));
                 x = s.getX();
                 y = s.getY();
                 drawBackground();

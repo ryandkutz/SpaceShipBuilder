@@ -5,7 +5,8 @@
  */
 package spaceshipbuilder.parts;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+import com.badlogic.gdx.math.Vector2;
+
 
 /**
  *
@@ -16,47 +17,47 @@ public abstract class ShipPart {
     public final int SIZE = 50;
     //Position is relative to the entire ship
     //Measured from center of the ship to center of the part in pixels, where each part is 50 pixels.
-    Vector2D position;
-    private double mass;
+    Vector2 position;
+    private float mass;
     
     public ShipPart() {
-        position = new Vector2D(0, 0);
+        position = new Vector2(0, 0);
         mass = 0;
     }
 
-    public ShipPart(double x, double y, double mass) {
-        position = new Vector2D(x, y);
+    public ShipPart(float x, float y, float mass) {
+        position = new Vector2(x, y);
         this.mass = mass;
     }
     
-    public double getMomentOfInertia(double massX, double massY) {
+    public float getMomentOfInertia(float massX, float massY) {
         //Uses moment of inertia euation for a plane and parallel axis theorem.
-        double center = 1/6 * mass * Math.pow(SIZE, 2);
-        double distanceSq = Math.pow(position.getX() - massX, 2) + Math.pow(position.getY() - massY, 2);
+        float center = 1/6 * mass * (float)Math.pow(SIZE, 2);
+        float distanceSq = (float)Math.pow(position.x - massX, 2) + (float)Math.pow(position.y - massY, 2);
         return center + distanceSq * mass;
     }
     
-    public double getX() {
-        return position.getX();
+    public float getX() {
+        return position.x;
     }
     
-    public double getY() {
-        return position.getY();
+    public float getY() {
+        return position.y;
     }
     
-    public void setX(double x) {
-        position = new Vector2D(x, position.getY());
+    public void setX(float x) {
+        position = new Vector2(x, position.y);
     }
     
-    public void setY(double y) {
-        position = new Vector2D(position.getX(), y);
+    public void setY(float y) {
+        position = new Vector2(position.x, y);
     }
     
-    public double getMass() {
+    public float getMass() {
         return mass;
     }
 
-    public void setMass(double mass) {
+    public void setMass(float mass) {
         this.mass = mass;
     }
     

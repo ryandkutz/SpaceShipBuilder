@@ -5,7 +5,8 @@
  */
 package spaceshipbuilder.parts;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+import com.badlogic.gdx.math.Vector2;
+
 
 /**
  *
@@ -16,22 +17,22 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 public class Engine extends ShipPart {
     
-    private Vector2D thrust;
-    private double fuelUsage;
+    private Vector2 thrust;
+    private float fuelUsage;
 
-    public Engine(Vector2D thrust, double fuelUsage) {
+    public Engine(Vector2 thrust, float fuelUsage) {
         super();
         this.thrust = thrust;
         this.fuelUsage = fuelUsage;
     }
 
-    public Engine(double x, double y, Vector2D thrust, double fuelUsage, double mass) {
+    public Engine(float x, float y, Vector2 thrust, float fuelUsage, float mass) {
         super(x, y, mass);
         this.thrust = thrust;
         this.fuelUsage = fuelUsage;
     }
     
-    public Vector2D getThrust() {
+    public Vector2 getThrust() {
         return thrust;
     }
     
