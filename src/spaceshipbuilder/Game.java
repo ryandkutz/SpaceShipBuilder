@@ -27,7 +27,7 @@ public class Game {
     private Canvas canvas;
     private GraphicsContext ctx;
     private Scene scene;
-    private boolean north, south, east, west = false;
+//    private boolean north, south, east, west = false;
     private double x, y = 0;
     
 
@@ -35,30 +35,6 @@ public class Game {
         this.canvas = canvas;
         ctx = canvas.getGraphicsContext2D();
         scene = canvas.getScene();
-        
-        //Gettign keyboard presses and releases to controll direction
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                switch(event.getCode()) {
-                    case W: north = true; break;
-                    case S: south = true; break;
-                    case A: west = true; break;
-                    case D: east = true; break;
-                }
-            }
-        });
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                switch(event.getCode()) {
-                    case W: north = false; break;
-                    case S: south = false; break;
-                    case A: west = false; break;
-                    case D: east = false; break;
-                }
-            }
-        });
         
     }
     
@@ -72,36 +48,43 @@ public class Game {
     
     public void drawShip(Spaceship ship) {
         ShipPart[][] parts = ship.getShipParts();
+        ctx.save();
+        double centerX = ctx.getCanvas().getWidth() / 2;
+        double centerY = ctx.getCanvas().getHeight() / 2;
+        double SIZE = 50;
+        ctx.translate(centerX, centerY);
+        ctx.rotate(ship.getRotation());
         for(ShipPart[] col : parts) {
             for(ShipPart p : col) {
-                //Not finished
+                if(p != null) {
+                    ctx.drawImage(p.sprite(), p.getX() - SIZE / 2, p.getY() - SIZE / 2);
+                }
             }
         }
-    }
-    
-    public void updateParts(double delta) {
-        delta /= 1e7;
-        if(east) x += 2 * delta;
-        if(west) x -= 2 * delta;
-        if(north) y += 2 * delta;
-        if(south) y -= 2 * delta;
+        ctx.restore();
     }
     
     public void loop() {
         Spaceship s = new Spaceship();
-        Engine e = new Engine(new Vector2(0, 20), 0);
-        e.setMass(10);
-        s.addPart(0, 0, e);
+        Engine e = new Engine(new Vector2(0, 60), 0);
+        e.setMass(5);
+        Engine e2 = new Engine(new Vector2(0, 60), 0);
+        e2.setMass(5);
+        Engine e3 = new Engine(new Vector2(0, 60), 0);
+        e3.setMass(5);
+        s.addPart(0, 0, e2);
+        s.addPart(0,2,e);
+        s.addPart(0,1,e3);
         //This is the main game loop
         AnimationTimer h = new AnimationTimer() {
-            long last = 0;
+            long last = System.nanoTime();
             @Override
             public void handle(long now) {
                 //Time passed since last call
-                double delta = (now - last);
-                float fps = 1000000000 / ((float)now - (float)last);
+                float delta = (float)(now - last);
+                float fps = 1000000000 / delta;
                 last = now;
-                s.updateShip((float)(delta / 1e7));
+                s.updateShip(delta);
                 x = s.getX();
                 y = s.getY();
                 drawBackground();

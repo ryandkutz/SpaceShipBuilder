@@ -6,35 +6,39 @@
 package spaceshipbuilder.parts;
 
 import com.badlogic.gdx.math.Vector2;
+import javafx.scene.image.Image;
 
 
 /**
  *
  * @author Gomez_866923
  */
-public abstract class ShipPart {
+public class ShipPart {
     
     public final int SIZE = 50;
     //Position is relative to the entire ship
     //Measured from center of the ship to center of the part in pixels, where each part is 50 pixels.
-    Vector2 position;
+    private Vector2 position;
     private float mass;
+    private Image sprite;
     
     public ShipPart() {
         position = new Vector2(0, 0);
-        mass = 0;
+        mass = 10;
+        sprite = new Image("Assets/FuelTank.png");
     }
 
     public ShipPart(float x, float y, float mass) {
         position = new Vector2(x, y);
         this.mass = mass;
+        sprite = new Image("Assets/FuelTank.png");
     }
     
     public float getMomentOfInertia(float massX, float massY) {
         //Uses moment of inertia euation for a plane and parallel axis theorem.
-        float center = 1/6 * mass * (float)Math.pow(SIZE, 2);
-        float distanceSq = (float)Math.pow(position.x - massX, 2) + (float)Math.pow(position.y - massY, 2);
-        return center + distanceSq * mass;
+        double center = mass / 6 * Math.pow(SIZE, 2);
+        double distanceSq = Math.pow(position.x - massX, 2) + Math.pow(position.y - massY, 2);
+        return (float)(center + distanceSq * mass);
     }
     
     public float getX() {
@@ -61,6 +65,8 @@ public abstract class ShipPart {
         this.mass = mass;
     }
     
-
+    public Image sprite() {
+        return sprite;
+    }
     
 }
