@@ -66,15 +66,24 @@ public class Game {
     
     public void loop() {
         Spaceship s = new Spaceship();
-        Engine e = new Engine(new Vector2(0, 60), 0);
+        Engine e = new Engine(new Vector2(0, 1000), 0);
         e.setMass(5);
-        Engine e2 = new Engine(new Vector2(0, 60), 0);
+        Engine e2 = new Engine(new Vector2(0, 1000), 0);
         e2.setMass(5);
-        Engine e3 = new Engine(new Vector2(0, 60), 0);
+        Engine e3 = new Engine(new Vector2(0, 1000), 0);
         e3.setMass(5);
-        s.addPart(0, 0, e2);
-        s.addPart(0,2,e);
-        s.addPart(0,1,e3);
+        s.addPart(3, 0, e2);
+        //s.addPart(3,2,e);
+        s.addPart(3,1,e3);
+        s.addPart(0, 0, new ShipPart());
+        s.addPart(0, 1, new ShipPart());
+        s.addPart(0, 2, new ShipPart());
+        s.addPart(1, 0, new ShipPart());
+        s.addPart(1, 1, new ShipPart());
+        s.addPart(1, 2, new ShipPart());
+        s.addPart(2, 0, new ShipPart());
+        s.addPart(2, 1, new ShipPart());
+        s.addPart(2, 2, new ShipPart());
         //This is the main game loop
         AnimationTimer h = new AnimationTimer() {
             long last = System.nanoTime();

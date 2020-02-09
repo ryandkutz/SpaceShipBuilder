@@ -6,6 +6,7 @@
 package spaceshipbuilder.parts;
 
 import com.badlogic.gdx.math.Vector2;
+import javafx.scene.image.Image;
 
 
 /**
@@ -24,12 +25,14 @@ public class Engine extends ShipPart {
         super();
         this.thrust = thrust;
         this.fuelUsage = fuelUsage;
+        super.setSprite(new Image("Assets/Engine.png"));
     }
 
     public Engine(float x, float y, Vector2 thrust, float fuelUsage, float mass) {
         super(x, y, mass);
         this.thrust = thrust;
         this.fuelUsage = fuelUsage;
+        super.setSprite(new Image("Assets/Engine.png"));
     }
     
     public Vector2 getThrust() {

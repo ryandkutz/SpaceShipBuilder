@@ -69,4 +69,8 @@ public class ShipPart {
         return sprite;
     }
     
+    public void setSprite(Image i) {
+        sprite = i;
+    }
+    
 }
