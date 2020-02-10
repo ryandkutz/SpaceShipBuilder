@@ -73,13 +73,14 @@ public class Game {
         Engine e3 = new Engine(new Vector2(0, 1000), 0);
         e3.setMass(5);
         s.addPart(3, 0, e2);
-        //s.addPart(3,2,e);
+        s.addPart(3,2,e);
         s.addPart(3,1,e3);
         s.addPart(0, 0, new ShipPart());
         s.addPart(0, 1, new ShipPart());
         s.addPart(0, 2, new ShipPart());
         s.addPart(1, 0, new ShipPart());
         s.addPart(1, 1, new ShipPart());
+        s.getShipParts()[1][1].setSprite(new Image("Assets/FuelTank.png"));
         s.addPart(1, 2, new ShipPart());
         s.addPart(2, 0, new ShipPart());
         s.addPart(2, 1, new ShipPart());

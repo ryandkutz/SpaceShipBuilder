@@ -25,13 +25,13 @@ public class ShipPart {
     public ShipPart() {
         position = new Vector2(0, 0);
         mass = 10;
-        sprite = new Image("Assets/FuelTank.png");
+        sprite = new Image("Assets/Block.png");
     }
 
     public ShipPart(float x, float y, float mass) {
         position = new Vector2(x, y);
         this.mass = mass;
-        sprite = new Image("Assets/FuelTank.png");
+        sprite = new Image("Assets/Block.png");
     }
     
     public float getMomentOfInertia(float massX, float massY) {
