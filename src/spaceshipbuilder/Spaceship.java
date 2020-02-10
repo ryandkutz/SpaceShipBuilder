@@ -6,6 +6,7 @@
 package spaceshipbuilder;
 
 import com.badlogic.gdx.math.Vector2;
+import java.util.TreeMap;
 import spaceshipbuilder.parts.*;
 import utils.Units;
 import static utils.Units.acceleration;
@@ -19,12 +20,13 @@ public class Spaceship {
     private ShipPart[][] shipParts;
     private Vector2 position;
     private Vector2 velocity;
+    private TreeMap<String, Integer> fuel;
     private float rotationalVelocity;
     private float rotation;
     private String name;
 
-    public Spaceship(int size, String name) {
-        shipParts = new ShipPart[size][size];
+    public Spaceship(int rows, int cols, String name) {
+        shipParts = new ShipPart[rows][cols];
         position = new Vector2(0, 0);
         rotation = 0;
         this.name = name;

@@ -28,8 +28,8 @@ public class Engine extends ShipPart {
         super.setSprite(new Image("Assets/Engine.png"));
     }
 
-    public Engine(float x, float y, Vector2 thrust, float fuelUsage, float mass) {
-        super(x, y, mass);
+    public Engine(Vector2 thrust, float fuelUsage, float mass) {
+        super(mass);
         this.thrust = thrust;
         this.fuelUsage = fuelUsage;
         super.setSprite(new Image("Assets/Engine.png"));

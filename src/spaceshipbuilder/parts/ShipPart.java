@@ -28,8 +28,8 @@ public class ShipPart {
         sprite = new Image("Assets/Block.png");
     }
 
-    public ShipPart(float x, float y, float mass) {
-        position = new Vector2(x, y);
+    public ShipPart(float mass) {
+        position = new Vector2(0, 0);
         this.mass = mass;
         sprite = new Image("Assets/Block.png");
     }

@@ -16,6 +16,6 @@ public class TestEngine extends Engine {
     
     public TestEngine(int x, int y)
     {
-        super(x, y, new Vector2(0, 10), 10, 10);
+        super(new Vector2(0, 10), 10, 10);
     }
 }
