@@ -5,38 +5,38 @@
  */
 package spaceshipbuilder.parts;
 
+import static utils.FuelTypes.density;
+
 /**
  *
  * @author Gomez_866923
  */
 public class FuelTank extends ShipPart {
     private String type;
-    
-    //In kg/meter^2
-    private float density;
+    //In meters^2
+    private float amount;
 
-    public FuelTank(String type, float density, float containerMass) {
-        super(density + containerMass);
+    public FuelTank(String type, float amount, float containerMass) {
+        super((density(type) * amount) + containerMass);
         this.type = type;
-        this.density = density;
+        setAmount(amount);
     }
 
     public String getType() {
         return type;
     }
 
-    public float getDensity() {
-        return density;
-    }
-
     public void setType(String type) {
         this.type = type;
     }
 
-    public void setDensity(float density) {
-        this.density = density;
+    public float getAmount() {
+        return amount;
     }
-    
-    
-    
+
+    public void setAmount(float amount) {
+        if(amount > 4)
+            this.amount = 4;
+        else this.amount = amount;
+    }
 }

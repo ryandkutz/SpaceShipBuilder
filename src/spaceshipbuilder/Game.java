@@ -66,11 +66,11 @@ public class Game {
     
     public void loop() {
         Spaceship s = new Spaceship(4, 3, "TEST");
-        Engine e = new Engine(new Vector2(0, 10000), 0);
+        Engine e = new Engine(new Vector2(0, 1000), 0);
         e.setMass(5);
-        Engine e2 = new Engine(new Vector2(0, 10000), 0);
+        Engine e2 = new Engine(new Vector2(0, 1000), 0);
         e2.setMass(5);
-        Engine e3 = new Engine(new Vector2(0, 10000), 0);
+        Engine e3 = new Engine(new Vector2(0, 1000), 0);
         e3.setMass(5);
         s.addPart(3, 0, e2);
         s.addPart(3,2,e);

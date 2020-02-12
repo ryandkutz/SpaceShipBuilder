@@ -20,7 +20,7 @@ public class Spaceship {
     private ShipPart[][] shipParts;
     private Vector2 position;
     private Vector2 velocity;
-    private TreeMap<String, Integer> fuel;
+    private TreeMap<String, Float> fuel;
     private float rotationalVelocity;
     private float rotation;
     private String name;
@@ -31,6 +31,7 @@ public class Spaceship {
         rotation = 0;
         this.name = name;
         velocity = new Vector2(0, 0);
+        fuel = new TreeMap<>();
     }
     
     public Spaceship() {
@@ -39,12 +40,16 @@ public class Spaceship {
         rotation = 0;
         name = "";
         velocity = new Vector2(0, 0);
+        fuel = new TreeMap<>();
     }
     
     public void addPart(int r, int c, ShipPart p) {
         p.setX((c - (float)(shipParts[r].length - 1) / 2) * p.SIZE);
         p.setY((r - (float)(shipParts.length - 1) / 2) * p.SIZE);
         shipParts[r][c] = p;
+        if (p instanceof FuelTank) {
+            fuel.put(((FuelTank)p).getType(), ((FuelTank)p).getAmount());
+        }
     }
     
     public float getMass() {
@@ -147,7 +152,7 @@ public class Spaceship {
                 }
             }
         }
-        float alpha = torque / getMomentOfInertia();
+        float alpha = torque / getMomentOfInertia() * (float)(360 / (2 * Math.PI));
         rotationalVelocity += alpha * delta;
         rotation += rotationalVelocity * delta;
         rotation %= 360;
