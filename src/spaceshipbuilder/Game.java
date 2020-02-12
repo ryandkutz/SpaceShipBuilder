@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import spaceshipbuilder.parts.Engine;
+import spaceshipbuilder.parts.FuelTank;
 import spaceshipbuilder.parts.ShipPart;
 
 /**
@@ -66,21 +67,20 @@ public class Game {
     
     public void loop() {
         Spaceship s = new Spaceship(4, 3, "TEST");
-        Engine e = new Engine(new Vector2(0, 1000), 0);
+        Engine e = new Engine(new Vector2(0, 1000), 1, "nuclear");
         e.setMass(5);
-        Engine e2 = new Engine(new Vector2(0, 1000), 0);
+        Engine e2 = new Engine(new Vector2(0, 1000), 1, "nuclear");
         e2.setMass(5);
-        Engine e3 = new Engine(new Vector2(0, 1000), 0);
+        Engine e3 = new Engine(new Vector2(0, 1000), 1, "nuclear");
         e3.setMass(5);
         s.addPart(3, 0, e2);
         s.addPart(3,2,e);
         s.addPart(3,1,e3);
-        s.addPart(0, 0, new ShipPart());
+        s.addPart(0, 0, new FuelTank("nuclear", 4, 1));
         s.addPart(0, 1, new ShipPart());
         s.addPart(0, 2, new ShipPart());
         s.addPart(1, 0, new ShipPart());
         s.addPart(1, 1, new ShipPart());
-        s.getShipParts()[1][1].setSprite(new Image("Assets/FuelTank.png"));
         s.addPart(1, 2, new ShipPart());
         s.addPart(2, 0, new ShipPart());
         s.addPart(2, 1, new ShipPart());
