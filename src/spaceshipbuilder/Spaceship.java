@@ -8,6 +8,7 @@ package spaceshipbuilder;
 import com.badlogic.gdx.math.Vector2;
 import java.util.TreeMap;
 import spaceshipbuilder.parts.*;
+import static utils.FuelTypes.density;
 import utils.Units;
 import static utils.Units.acceleration;
 import static utils.Units.seconds;
@@ -23,6 +24,7 @@ public class Spaceship {
     private TreeMap<String, Float> fuel;
     private float rotationalVelocity;
     private float rotation;
+    private float mass;
     private String name;
 
     public Spaceship(int rows, int cols, String name) {
@@ -32,6 +34,7 @@ public class Spaceship {
         this.name = name;
         velocity = new Vector2(0, 0);
         fuel = new TreeMap<>();
+        mass = getMass();
     }
     
     public Spaceship() {
@@ -41,6 +44,7 @@ public class Spaceship {
         name = "";
         velocity = new Vector2(0, 0);
         fuel = new TreeMap<>();
+        mass = getMass();
     }
     
     public void addPart(int r, int c, ShipPart p) {
@@ -48,8 +52,12 @@ public class Spaceship {
         p.setY((r - (float)(shipParts.length - 1) / 2) * p.SIZE);
         shipParts[r][c] = p;
         if (p instanceof FuelTank) {
-            fuel.put(((FuelTank)p).getType(), ((FuelTank)p).getAmount());
+            FuelTank f = (FuelTank)p;
+            if(fuel.containsKey(f.getType()))
+                fuel.put(f.getType(), f.getAmount() + fuel.get(f.getType()));
+            else fuel.put(f.getType(), f.getAmount());
         }
+        mass = getMass();
     }
     
     public float getMass() {
@@ -145,7 +153,9 @@ public class Spaceship {
         Vector2 force = new Vector2(0, 0);
         for(ShipPart[] row: shipParts) {
             for(ShipPart part: row) {
-                if(part != null && part instanceof Engine) {
+                if(part != null && part instanceof Engine && ((Engine)part).getFuelUsage() * delta < fuel.get(((Engine)part).getFuelType())) {
+                    fuel.put(((Engine)part).getFuelType(), fuel.get(((Engine)part).getFuelType()) - delta * ((Engine)part).getFuelUsage());
+                    mass -= delta * ((Engine)part).getFuelUsage() * density(((Engine)part).getFuelType());
                     force.add(((Engine)part).getThrust());
                     Vector2 cmPosition = new Vector2(getCenterMassX() - part.getX(), getCenterMassY() - part.getY());
                     torque += cmPosition.crs(((Engine)part).getThrust());
@@ -157,8 +167,8 @@ public class Spaceship {
         rotation += rotationalVelocity * delta;
         rotation %= 360;
         force.rotate(-rotation);
-        force.add(new Vector2(0, -getMass() * Units.GRAVITY));
-        velocity.add(acceleration(getMass(), force).scl(delta));
+        force.add(new Vector2(0, -mass * Units.GRAVITY));
+        velocity.add(acceleration(mass, force).scl(delta));
         position.add(velocity.x * delta, velocity.y * delta);
     }
 }

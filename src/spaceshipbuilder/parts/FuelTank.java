@@ -5,6 +5,7 @@
  */
 package spaceshipbuilder.parts;
 
+import javafx.scene.image.Image;
 import static utils.FuelTypes.density;
 
 /**
@@ -20,6 +21,7 @@ public class FuelTank extends ShipPart {
         super((density(type) * amount) + containerMass);
         this.type = type;
         setAmount(amount);
+        setSprite(new Image("Assets/FuelTank.png"));
     }
 
     public String getType() {
