@@ -41,10 +41,15 @@ public class Game {
     
     public void drawBackground() {
         Image clouds = new Image("Assets/Clouds.png");
-        ctx.drawImage(clouds, -x % 400 + (x > 0 ? 400 : -400), y % 400);
-        ctx.drawImage(clouds, -x % 400, y % 400);
-        ctx.drawImage(clouds, -x % 400 + (x > 0 ? 400 : -400), y % 400 + (y > 0 ? -400 : 400));
-        ctx.drawImage(clouds, -x % 400, y % 400 + (y > 0 ? -400 : 400));
+        for(double i = -x % 400 - 400; i < canvas.getWidth(); i += 400) {
+            for(double j = y % 400 - 400; j < canvas.getHeight(); j += 400) {
+                ctx.drawImage(clouds, i, j);
+            }
+        }
+//        ctx.drawImage(clouds, -x % 400 + (x > 0 ? 400 : -400), y % 400);
+//        ctx.drawImage(clouds, -x % 400, y % 400);
+//        ctx.drawImage(clouds, -x % 400 + (x > 0 ? 400 : -400), y % 400 + (y > 0 ? -400 : 400));
+//        ctx.drawImage(clouds, -x % 400, y % 400 + (y > 0 ? -400 : 400));
     }
     
     public void drawShip(Spaceship ship) {

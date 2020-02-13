@@ -26,7 +26,7 @@ public class Engine extends ShipPart {
         super();
         this.thrust = thrust;
         this.fuelUsage = fuelUsage;
-        fuelType = "";
+        fuelType = "default";
         super.setSprite(new Image("Assets/Engine.png"));
     }
 
@@ -34,7 +34,7 @@ public class Engine extends ShipPart {
         super(mass);
         this.thrust = thrust;
         this.fuelUsage = fuelUsage;
-        fuelType = "";
+        fuelType = "default";
         super.setSprite(new Image("Assets/Engine.png"));
     }
 
