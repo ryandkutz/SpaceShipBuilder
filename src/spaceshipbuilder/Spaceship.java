@@ -22,6 +22,7 @@ public class Spaceship {
     private Vector2 position;
     private Vector2 velocity;
     private TreeMap<String, Float> fuel;
+    private TreeMap<String, Float> consumedFuel;
     private float rotationalVelocity;
     private float rotation;
     private float mass;
@@ -145,6 +146,10 @@ public class Spaceship {
 
     public String getName() {
         return name;
+    }
+
+    public TreeMap<String, Float> getFuel() {
+        return fuel;
     }
     
     public void updateShip(float delta) {

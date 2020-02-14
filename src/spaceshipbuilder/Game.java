@@ -6,6 +6,7 @@
 package spaceshipbuilder;
 
 import com.badlogic.gdx.math.Vector2;
+import java.util.TreeMap;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -15,6 +16,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import spaceshipbuilder.parts.Engine;
 import spaceshipbuilder.parts.FuelTank;
 import spaceshipbuilder.parts.ShipPart;
@@ -28,14 +30,21 @@ public class Game {
     private Canvas canvas;
     private GraphicsContext ctx;
     private Scene scene;
-//    private boolean north, south, east, west = false;
+    private Spaceship ship;
     private double x, y = 0;
     
 
     public Game(Canvas canvas) {
+        ship = new Spaceship(4, 3, "TEST");
         this.canvas = canvas;
         ctx = canvas.getGraphicsContext2D();
         scene = canvas.getScene();
+        scene.widthProperty().addListener((obs, oldVal, newVal) -> {
+            canvas.setWidth(newVal.doubleValue());
+        });
+        scene.heightProperty().addListener((obs, oldVal, newVal) -> {
+            canvas.setHeight(newVal.doubleValue());
+        });
         
     }
     
@@ -46,13 +55,20 @@ public class Game {
                 ctx.drawImage(clouds, i, j);
             }
         }
+//        ctx.save();
+//        for(double i = -x % 400 - 400 - canvas.getWidth() / 2; i < canvas.getWidth() / 2; i += 400) {
+//            for(double j = y % 400 - 400 - canvas.getHeight() / 2; j < canvas.getHeight() / 2; j += 400) {
+//                ctx.drawImage(clouds, i, j);
+//            }
+//        }
+//        ctx.restore();
 //        ctx.drawImage(clouds, -x % 400 + (x > 0 ? 400 : -400), y % 400);
 //        ctx.drawImage(clouds, -x % 400, y % 400);
 //        ctx.drawImage(clouds, -x % 400 + (x > 0 ? 400 : -400), y % 400 + (y > 0 ? -400 : 400));
 //        ctx.drawImage(clouds, -x % 400, y % 400 + (y > 0 ? -400 : 400));
     }
     
-    public void drawShip(Spaceship ship) {
+    public void drawShip() {
         ShipPart[][] parts = ship.getShipParts();
         ctx.save();
         double centerX = ctx.getCanvas().getWidth() / 2;
@@ -70,26 +86,37 @@ public class Game {
         ctx.restore();
     }
     
+    public void drawFuel() {
+        TreeMap<String, Float> fuel = ship.getFuel();
+        float height = 10;//px
+        float maxWidth = 80;
+        Font f = new Font(10);
+        int num = 1;
+        for(String s : fuel.keySet()) {
+            ctx.fillText(s.substring(0, 3), 0, canvas.getHeight() - num * height);
+            num++;
+        }
+    }
+    
     public void loop() {
-        Spaceship s = new Spaceship(4, 3, "TEST");
         Engine e = new Engine(new Vector2(0, 1000), 1, "nuclear");
         e.setMass(5);
         Engine e2 = new Engine(new Vector2(0, 1000), 1, "nuclear");
         e2.setMass(5);
         Engine e3 = new Engine(new Vector2(0, 1000), 1, "nuclear");
         e3.setMass(5);
-        s.addPart(3, 0, e2);
-        s.addPart(3,2,e);
-        s.addPart(3,1,e3);
-        s.addPart(0, 0, new FuelTank("nuclear", 4, 1));
-        s.addPart(0, 1, new ShipPart());
-        s.addPart(0, 2, new ShipPart());
-        s.addPart(1, 0, new ShipPart());
-        s.addPart(1, 1, new ShipPart());
-        s.addPart(1, 2, new ShipPart());
-        s.addPart(2, 0, new ShipPart());
-        s.addPart(2, 1, new ShipPart());
-        s.addPart(2, 2, new ShipPart());
+        ship.addPart(3, 0, e2);
+        ship.addPart(3,2,e);
+        ship.addPart(3,1,e3);
+        ship.addPart(0, 0, new FuelTank("nuclear", 4, 1));
+        ship.addPart(0, 1, new ShipPart());
+        ship.addPart(0, 2, new ShipPart());
+        ship.addPart(1, 0, new ShipPart());
+        ship.addPart(1, 1, new ShipPart());
+        ship.addPart(1, 2, new ShipPart());
+        ship.addPart(2, 0, new ShipPart());
+        ship.addPart(2, 1, new ShipPart());
+        ship.addPart(2, 2, new ShipPart());
         //This is the main game loop
         AnimationTimer h = new AnimationTimer() {
             long last = System.nanoTime();
@@ -99,11 +126,12 @@ public class Game {
                 float delta = (float)(now - last);
                 float fps = 1000000000 / delta;
                 last = now;
-                s.updateShip(delta);
-                x = s.getX();
-                y = s.getY();
+                ship.updateShip(delta);
+                x = ship.getX();
+                y = ship.getY();
                 drawBackground();
-                drawShip(s);
+                drawShip();
+                drawFuel();
                 ctx.setFill(Color.BLACK);
                 ctx.fillText(Double.toString(fps), 10, 10);
             }
