@@ -54,8 +54,8 @@ public class Game {
     public void drawBackground() {
         for(double i = -x % 400 - 400; i < canvas.getWidth(); i += 400) {
             for(double j = y % 400 - 400; j < canvas.getHeight(); j += 400) {
-                if (y - j > 0) ctx.drawImage(clouds, i, j);
-                else if(y - j > -400) ctx.drawImage(grass, i, j);
+                if (y - j >= 0) ctx.drawImage(clouds, i, j);
+                else if(y - j >= -400) ctx.drawImage(grass, i, j);
                 else ctx.drawImage(dirt, i, j);
             }
         }

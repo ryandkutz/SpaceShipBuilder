@@ -181,11 +181,11 @@ public class Spaceship {
             }
         }
         float alpha = torque / getMomentOfInertia() * (float)(360 / (2 * Math.PI));
-        rotationalVelocity += alpha * delta;
-        rotation += rotationalVelocity * delta;
-        rotation %= 360;
-        force.rotate(-rotation);
         if(position.y >= 0) {
+            rotationalVelocity += alpha * delta;
+            rotation += rotationalVelocity * delta;
+            rotation %= 360;
+            force.rotate(-rotation);
             force.add(new Vector2(0, -mass * Units.GRAVITY));
             velocity.add(acceleration(mass, force).scl(delta));
         } else {
