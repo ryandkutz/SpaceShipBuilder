@@ -95,7 +95,6 @@ public class Game {
         int num = 1;
         for(String s : fuel.keySet()) {
             float percent = (fuel.get(s) - consumed.get(s)) / fuel.get(s);
-            System.out.println(percent);
             ctx.setFill(Color.BLACK);
             ctx.fillText(s.substring(0, 3) + ": " + (int)(percent * 100) + "%", 0, canvas.getHeight() - (num - 1) * height);
             ctx.setFill(Color.GREEN);
