@@ -185,8 +185,13 @@ public class Spaceship {
         rotation += rotationalVelocity * delta;
         rotation %= 360;
         force.rotate(-rotation);
-        force.add(new Vector2(0, -mass * Units.GRAVITY));
-        velocity.add(acceleration(mass, force).scl(delta));
+        if(position.y >= 0) {
+            force.add(new Vector2(0, -mass * Units.GRAVITY));
+            velocity.add(acceleration(mass, force).scl(delta));
+        } else {
+            velocity.x = 0;
+            velocity.y = 0;
+        }
         position.add(velocity.x * delta, velocity.y * delta);
     }
 }

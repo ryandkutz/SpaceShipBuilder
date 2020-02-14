@@ -32,6 +32,9 @@ public class Game {
     private Scene scene;
     private Spaceship ship;
     private double x, y = 0;
+    private final Image clouds = new Image("Assets/Clouds.png");
+    private final Image dirt = new Image("Assets/Dirt.png");
+    private final Image grass = new Image("Assets/Grass.png");
     
 
     public Game(Canvas canvas) {
@@ -49,9 +52,6 @@ public class Game {
     }
     
     public void drawBackground() {
-        Image clouds = new Image("Assets/Clouds.png");
-        Image dirt = new Image("Assets/Dirt.png");
-        Image grass = new Image("Assets/Grass.png");
         for(double i = -x % 400 - 400; i < canvas.getWidth(); i += 400) {
             for(double j = y % 400 - 400; j < canvas.getHeight(); j += 400) {
                 if (y - j > 0) ctx.drawImage(clouds, i, j);
@@ -127,6 +127,7 @@ public class Game {
                 ship.updateShip(delta);
                 x = ship.getX();
                 y = ship.getY();
+                ctx.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 drawBackground();
                 drawShip();
                 drawFuel();
