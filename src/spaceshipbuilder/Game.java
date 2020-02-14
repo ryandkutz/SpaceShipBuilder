@@ -88,12 +88,18 @@ public class Game {
     
     public void drawFuel() {
         TreeMap<String, Float> fuel = ship.getFuel();
+        TreeMap<String, Float> consumed = ship.getConsumedFuel();
         float height = 10;//px
-        float maxWidth = 80;
+        float maxWidth = 140;
         Font f = new Font(10);
         int num = 1;
         for(String s : fuel.keySet()) {
-            ctx.fillText(s.substring(0, 3), 0, canvas.getHeight() - num * height);
+            float percent = (fuel.get(s) - consumed.get(s)) / fuel.get(s);
+            System.out.println(percent);
+            ctx.setFill(Color.BLACK);
+            ctx.fillText(s.substring(0, 3) + ": " + (int)(percent * 100) + "%", 0, canvas.getHeight() - (num - 1) * height);
+            ctx.setFill(Color.GREEN);
+            ctx.fillRect(40, canvas.getHeight() - num * height, maxWidth * percent, height);
             num++;
         }
     }
