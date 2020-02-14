@@ -35,6 +35,7 @@ public class Spaceship {
         this.name = name;
         velocity = new Vector2(0, 0);
         fuel = new TreeMap<>();
+        consumedFuel = new TreeMap<>();
         mass = getMass();
     }
     
@@ -45,6 +46,7 @@ public class Spaceship {
         name = "";
         velocity = new Vector2(0, 0);
         fuel = new TreeMap<>();
+        consumedFuel = new TreeMap<>();
         mass = getMass();
     }
     
@@ -54,9 +56,11 @@ public class Spaceship {
         shipParts[r][c] = p;
         if (p instanceof FuelTank) {
             FuelTank f = (FuelTank)p;
-            if(fuel.containsKey(f.getType()))
+            if(fuel.containsKey(f.getType())){
                 fuel.put(f.getType(), f.getAmount() + fuel.get(f.getType()));
+            }
             else fuel.put(f.getType(), f.getAmount());
+            consumedFuel.put(f.getType(), 0f);
         }
         mass = getMass();
     }
@@ -151,6 +155,12 @@ public class Spaceship {
     public TreeMap<String, Float> getFuel() {
         return fuel;
     }
+
+    public TreeMap<String, Float> getConsumedFuel() {
+        return consumedFuel;
+    }
+    
+    
     
     public void updateShip(float delta) {
         delta = seconds(delta);
@@ -158,8 +168,11 @@ public class Spaceship {
         Vector2 force = new Vector2(0, 0);
         for(ShipPart[] row: shipParts) {
             for(ShipPart part: row) {
-                if(part != null && part instanceof Engine && ((Engine)part).getFuelUsage() * delta < fuel.get(((Engine)part).getFuelType())) {
-                    fuel.put(((Engine)part).getFuelType(), fuel.get(((Engine)part).getFuelType()) - delta * ((Engine)part).getFuelUsage());
+                if(part != null && part instanceof Engine && 
+                        ((Engine)part).getFuelUsage() * delta <
+                        fuel.get(((Engine)part).getFuelType()) -
+                        consumedFuel.get(((Engine)part).getFuelType())) {
+                    consumedFuel.put(((Engine)part).getFuelType(), consumedFuel.get(((Engine)part).getFuelType()) + delta * ((Engine)part).getFuelUsage());
                     mass -= delta * ((Engine)part).getFuelUsage() * density(((Engine)part).getFuelType());
                     force.add(((Engine)part).getThrust());
                     Vector2 cmPosition = new Vector2(getCenterMassX() - part.getX(), getCenterMassY() - part.getY());

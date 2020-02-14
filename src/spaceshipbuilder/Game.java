@@ -99,23 +99,23 @@ public class Game {
             ctx.setFill(Color.BLACK);
             ctx.fillText(s.substring(0, 3) + ": " + (int)(percent * 100) + "%", 0, canvas.getHeight() - (num - 1) * height);
             ctx.setFill(Color.GREEN);
-            ctx.fillRect(40, canvas.getHeight() - num * height, maxWidth * percent, height);
+            ctx.fillRect(50, canvas.getHeight() - num * height, maxWidth * percent, height);
             num++;
         }
     }
     
     public void loop() {
-        Engine e = new Engine(new Vector2(0, 1000), 1, "nuclear");
+        Engine e = new Engine(new Vector2(0, 1000), 0.1f, "nuclear");
         e.setMass(5);
-        Engine e2 = new Engine(new Vector2(0, 1000), 1, "nuclear");
+        Engine e2 = new Engine(new Vector2(0, 1000), 0.1f, "nuclear");
         e2.setMass(5);
-        Engine e3 = new Engine(new Vector2(0, 1000), 1, "nuclear");
+        Engine e3 = new Engine(new Vector2(0, 1000), 0.1f, "nuclear");
         e3.setMass(5);
         ship.addPart(3, 0, e2);
         ship.addPart(3,2,e);
         ship.addPart(3,1,e3);
         ship.addPart(0, 0, new FuelTank("nuclear", 4, 1));
-        ship.addPart(0, 1, new ShipPart());
+        ship.addPart(0, 1, new FuelTank("default", 4, 1));
         ship.addPart(0, 2, new ShipPart());
         ship.addPart(1, 0, new ShipPart());
         ship.addPart(1, 1, new ShipPart());
