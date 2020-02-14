@@ -50,22 +50,15 @@ public class Game {
     
     public void drawBackground() {
         Image clouds = new Image("Assets/Clouds.png");
+        Image dirt = new Image("Assets/Dirt.png");
+        Image grass = new Image("Assets/Grass.png");
         for(double i = -x % 400 - 400; i < canvas.getWidth(); i += 400) {
             for(double j = y % 400 - 400; j < canvas.getHeight(); j += 400) {
-                ctx.drawImage(clouds, i, j);
+                if (y - j > 0) ctx.drawImage(clouds, i, j);
+                else if(y - j > -400) ctx.drawImage(grass, i, j);
+                else ctx.drawImage(dirt, i, j);
             }
         }
-//        ctx.save();
-//        for(double i = -x % 400 - 400 - canvas.getWidth() / 2; i < canvas.getWidth() / 2; i += 400) {
-//            for(double j = y % 400 - 400 - canvas.getHeight() / 2; j < canvas.getHeight() / 2; j += 400) {
-//                ctx.drawImage(clouds, i, j);
-//            }
-//        }
-//        ctx.restore();
-//        ctx.drawImage(clouds, -x % 400 + (x > 0 ? 400 : -400), y % 400);
-//        ctx.drawImage(clouds, -x % 400, y % 400);
-//        ctx.drawImage(clouds, -x % 400 + (x > 0 ? 400 : -400), y % 400 + (y > 0 ? -400 : 400));
-//        ctx.drawImage(clouds, -x % 400, y % 400 + (y > 0 ? -400 : 400));
     }
     
     public void drawShip() {
