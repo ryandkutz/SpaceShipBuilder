@@ -35,11 +35,11 @@ public class MainMenuController implements Initializable {
         Group root = new Group();
         Stage stage = new Stage();
         stage.setTitle("Have a Good Launch!");
-        stage.setScene(new Scene(root, 450, 450));
+        stage.setScene(new Scene(root, 800 , 600));
         stage.show();
         // Hide this current window (if this is what you want)
         ((Node)(event.getSource())).getScene().getWindow().hide();
-        final Canvas canvas = new Canvas(450,450);
+        final Canvas canvas = new Canvas(800, 600);
         root.getChildren().add(canvas);
         Game g = new Game(canvas);
         g.loop();

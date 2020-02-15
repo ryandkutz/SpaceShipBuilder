@@ -53,8 +53,6 @@ public class Engine extends ShipPart {
         super.setSprite(new Image("Assets/Engine.png"));
     }
     
-    
-    
     public Vector2 getThrust() {
         return thrust;
     }
@@ -66,7 +64,5 @@ public class Engine extends ShipPart {
     public String getFuelType() {
         return fuelType;
     }
-    
-    
     
 }
