@@ -52,13 +52,16 @@ public class Game {
     }
     
     public void drawBackground() {
-        for(double i = -x % 400 - 400; i < canvas.getWidth(); i += 400) {
-            for(double j = y % 400 - 400; j < canvas.getHeight(); j += 400) {
-                if (y - j >= 0) ctx.drawImage(clouds, i, j);
-                else if(y - j >= -400) ctx.drawImage(grass, i, j);
+        ctx.save();
+        ctx.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
+        for(double i = -Math.ceil(canvas.getWidth() / 800) * 400 - x % 400 - 400; i < canvas.getWidth(); i += 400) {
+            for(double j = -Math.ceil(canvas.getHeight() / 800) * 400 + y % 400 - 400; j < canvas.getHeight(); j += 400) {
+                if (y - j > 0) ctx.drawImage(clouds, i, j);
+                else if(y - j > -400) ctx.drawImage(grass, i, j);
                 else ctx.drawImage(dirt, i, j);
             }
         }
+        ctx.restore();
     }
     
     public void drawShip() {
@@ -123,6 +126,7 @@ public class Game {
                 //Time passed since last call
                 float delta = (float)(now - last);
                 float fps = 1000000000 / delta;
+
                 last = now;
                 ship.updateShip(delta);
                 x = ship.getX();

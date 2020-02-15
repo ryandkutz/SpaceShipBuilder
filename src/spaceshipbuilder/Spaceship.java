@@ -160,8 +160,6 @@ public class Spaceship {
         return consumedFuel;
     }
     
-    
-    
     public void updateShip(float delta) {
         delta = seconds(delta);
         float torque = 0;
