@@ -94,7 +94,7 @@ public class Game {
             ctx.setFill(Color.BLACK);
             ctx.fillText(s.substring(0, 3) + ": " + (int)(percent * 100) + "%", 0, canvas.getHeight() - (num - 1) * height);
             ctx.setFill(Color.GREEN);
-            ctx.fillRect(50, canvas.getHeight() - num * height, maxWidth * percent, height);
+            ctx.fillRect(55, canvas.getHeight() - num * height, maxWidth * percent, height);
             num++;
         }
     }
