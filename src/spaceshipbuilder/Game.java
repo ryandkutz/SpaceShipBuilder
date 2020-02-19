@@ -49,6 +49,7 @@ public class Game {
             canvas.setHeight(newVal.doubleValue());
         });
         
+        
     }
     
     public void drawBackground() {
