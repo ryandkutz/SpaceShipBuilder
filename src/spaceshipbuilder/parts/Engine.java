@@ -21,6 +21,14 @@ public class Engine extends ShipPart {
     private Vector2 thrust;
     private float fuelUsage;
     private String fuelType;
+    
+    public Engine() {
+        super();
+        this.thrust = new Vector2();
+        this.fuelUsage = 1;
+        fuelType = "default";
+        super.setSprite(new Image("Assets/Engine.png"));
+    }
 
     public Engine(Vector2 thrust, float fuelUsage) {
         super();
