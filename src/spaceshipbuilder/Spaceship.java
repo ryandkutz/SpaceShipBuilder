@@ -6,6 +6,7 @@
 package spaceshipbuilder;
 
 import com.badlogic.gdx.math.Vector2;
+import java.io.Serializable;
 import java.util.TreeMap;
 import spaceshipbuilder.parts.*;
 import static utils.FuelTypes.density;
@@ -17,7 +18,7 @@ import static utils.Units.seconds;
  *
  * @author Gomez_866923
  */
-public class Spaceship {
+public class Spaceship implements Serializable{
     private ShipPart[][] shipParts;
     private Vector2 position;
     private Vector2 velocity;
@@ -51,8 +52,6 @@ public class Spaceship {
     }
     
     public void addPart(int r, int c, ShipPart p) {
-        p.setX((c - (float)(shipParts[r].length - 1) / 2) * p.SIZE);
-        p.setY((r - (float)(shipParts.length - 1) / 2) * p.SIZE);
         shipParts[r][c] = p;
         if (p instanceof FuelTank) {
             FuelTank f = (FuelTank)p;
@@ -62,7 +61,11 @@ public class Spaceship {
             else fuel.put(f.getType(), f.getAmount());
             consumedFuel.put(f.getType(), 0f);
         }
-        mass = getMass();
+        if (p != null) {
+            p.setX((c - (float)(shipParts[r].length - 1) / 2) * p.SIZE);
+            p.setY((r - (float)(shipParts.length - 1) / 2) * p.SIZE);
+            mass = getMass();
+        }
     }
     
     public float getMass() {
