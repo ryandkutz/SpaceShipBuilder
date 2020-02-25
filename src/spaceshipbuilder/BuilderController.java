@@ -69,8 +69,10 @@ public class BuilderController implements Initializable {
             ship.addPart(row, col, new Engine());
         } else if(part instanceof FuelTank) {
             ship.addPart(row, col, new FuelTank("default", 1, 1));
-        } else {
+        } else if(part != null) {
             ship.addPart(row, col, new ShipPart());
+        } else {
+            ship.addPart(row, col, null);
         }
     }
     
