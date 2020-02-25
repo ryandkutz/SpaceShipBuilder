@@ -27,7 +27,7 @@ public class Engine extends ShipPart {
         this.thrust = new Vector2();
         this.fuelUsage = 1;
         fuelType = "default";
-        super.setSprite(new Image("Assets/Engine.png"));
+        super.setSprite("Assets/Engine.png");
     }
 
     public Engine(Vector2 thrust, float fuelUsage) {
@@ -35,7 +35,7 @@ public class Engine extends ShipPart {
         this.thrust = thrust;
         this.fuelUsage = fuelUsage;
         fuelType = "default";
-        super.setSprite(new Image("Assets/Engine.png"));
+        super.setSprite("Assets/Engine.png");
     }
 
     public Engine(Vector2 thrust, float fuelUsage, float mass) {
@@ -43,14 +43,14 @@ public class Engine extends ShipPart {
         this.thrust = thrust;
         this.fuelUsage = fuelUsage;
         fuelType = "default";
-        super.setSprite(new Image("Assets/Engine.png"));
+        super.setSprite("Assets/Engine.png");
     }
 
     public Engine(Vector2 thrust, float fuelUsage, String fuelType) {
         this.thrust = thrust;
         this.fuelUsage = fuelUsage;
         this.fuelType = fuelType;
-        super.setSprite(new Image("Assets/Engine.png"));
+        super.setSprite("Assets/Engine.png");
     }
 
     public Engine(Vector2 thrust, float fuelUsage, String fuelType, float mass) {
@@ -58,7 +58,7 @@ public class Engine extends ShipPart {
         this.thrust = thrust;
         this.fuelUsage = fuelUsage;
         this.fuelType = fuelType;
-        super.setSprite(new Image("Assets/Engine.png"));
+        super.setSprite("Assets/Engine.png");
     }
     
     public Vector2 getThrust() {

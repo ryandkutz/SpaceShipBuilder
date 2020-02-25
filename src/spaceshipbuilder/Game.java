@@ -6,7 +6,14 @@
 package spaceshipbuilder;
 
 import com.badlogic.gdx.math.Vector2;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.ObjectInputStream;
+import java.util.HashMap;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -17,6 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import spaceshipbuilder.parts.Engine;
 import spaceshipbuilder.parts.FuelTank;
 import spaceshipbuilder.parts.ShipPart;
@@ -32,16 +40,40 @@ public class Game {
     private Scene scene;
     private Spaceship ship;
     private double x, y = 0;
-    private final Image clouds = new Image("Assets/Clouds.png");
-    private final Image dirt = new Image("Assets/Dirt.png");
-    private final Image grass = new Image("Assets/Grass.png");
+    private HashMap<String, Image> sprites;
     
 
     public Game(Canvas canvas) {
-        ship = new Spaceship(4, 3, "TEST");
+        sprites = new HashMap<>();
+        sprites.put("dirt", new Image("Assets/Dirt.png"));
+        sprites.put("grass", new Image("Assets/Grass.png"));
+        sprites.put("clouds", new Image("Assets/Clouds.png"));
+        
         this.canvas = canvas;
         ctx = canvas.getGraphicsContext2D();
         scene = canvas.getScene();
+        
+        FileChooser chooser = new FileChooser();
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Space Ships", "*.ship");
+        chooser.getExtensionFilters().add(filter);
+        File file = chooser.showOpenDialog(scene.getWindow());
+        FileInputStream in;
+        if(file != null) {
+            try {
+                in = new FileInputStream(file);
+                ObjectInputStream obj = new ObjectInputStream(in);
+                ship = (Spaceship)obj.readObject();
+                for(ShipPart[] parts : ship.getShipParts()) {
+                    for(ShipPart p : parts) {
+                        if(p != null)
+                            sprites.put(p.sprite(), new Image(p.sprite()));
+                    }
+                }
+            } catch (Exception ex) {
+                ship = new Spaceship();
+            }
+        } else ship = new Spaceship();
+        
         scene.widthProperty().addListener((obs, oldVal, newVal) -> {
             canvas.setWidth(newVal.doubleValue());
         });
@@ -57,9 +89,9 @@ public class Game {
         ctx.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
         for(double i = -Math.ceil(canvas.getWidth() / 800) * 400 - x % 400 - 400; i < canvas.getWidth(); i += 400) {
             for(double j = -Math.ceil(canvas.getHeight() / 800) * 400 + y % 400 - 400; j < canvas.getHeight(); j += 400) {
-                if (y - j > 0) ctx.drawImage(clouds, i, j);
-                else if(y - j > -400) ctx.drawImage(grass, i, j);
-                else ctx.drawImage(dirt, i, j);
+                if (y - j > 0) ctx.drawImage(sprites.get("clouds"), i, j);
+                else if(y - j > -400) ctx.drawImage(sprites.get("grass"), i, j);
+                else ctx.drawImage(sprites.get("dirt"), i, j);
             }
         }
         ctx.restore();
@@ -76,7 +108,7 @@ public class Game {
         for(ShipPart[] col : parts) {
             for(ShipPart p : col) {
                 if(p != null) {
-                    ctx.drawImage(p.sprite(), p.getX() - SIZE / 2, p.getY() - SIZE / 2);
+                    ctx.drawImage(sprites.get(p.sprite()), p.getX() - SIZE / 2, p.getY() - SIZE / 2);
                 }
             }
         }
@@ -107,18 +139,6 @@ public class Game {
         e2.setMass(5);
         Engine e3 = new Engine(new Vector2(0, 1000), 0.1f, "nuclear");
         e3.setMass(5);
-        ship.addPart(3, 0, e2);
-        ship.addPart(3,2,e);
-        ship.addPart(3,1,e3);
-        ship.addPart(0, 0, new FuelTank("nuclear", 4, 1));
-        ship.addPart(0, 1, new FuelTank("default", 4, 1));
-        ship.addPart(0, 2, new ShipPart());
-        ship.addPart(1, 0, new ShipPart());
-        ship.addPart(1, 1, new ShipPart());
-        ship.addPart(1, 2, new ShipPart());
-        ship.addPart(2, 0, new ShipPart());
-        ship.addPart(2, 1, new ShipPart());
-        ship.addPart(2, 2, new ShipPart());
         //This is the main game loop
         AnimationTimer h = new AnimationTimer() {
             long last = System.nanoTime();

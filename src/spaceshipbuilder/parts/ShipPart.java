@@ -6,32 +6,32 @@
 package spaceshipbuilder.parts;
 
 import com.badlogic.gdx.math.Vector2;
-import javafx.scene.image.Image;
+import java.io.Serializable;
 
 
 /**
  *
  * @author Gomez_866923
  */
-public class ShipPart {
+public class ShipPart implements Serializable {
     
     public final int SIZE = 50;
     //Position is relative to the entire ship
     //Measured from center of the ship to center of the part in pixels, where each part is 50 pixels.
     private Vector2 position;
     private float mass;
-    private Image sprite;
+    private String sprite;
     
     public ShipPart() {
         position = new Vector2(0, 0);
         mass = 10;
-        sprite = new Image("Assets/Block.png");
+        sprite = "Assets/Block.png";
     }
 
     public ShipPart(float mass) {
         position = new Vector2(0, 0);
         this.mass = mass;
-        sprite = new Image("Assets/Block.png");
+        sprite = "Assets/Block.png";
     }
     
     public float getMomentOfInertia(float massX, float massY) {
@@ -65,11 +65,11 @@ public class ShipPart {
         this.mass = mass;
     }
     
-    public Image sprite() {
+    public String sprite() {
         return sprite;
     }
     
-    public void setSprite(Image i) {
+    public void setSprite(String i) {
         sprite = i;
     }
     

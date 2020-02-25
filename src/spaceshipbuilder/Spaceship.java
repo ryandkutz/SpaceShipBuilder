@@ -169,7 +169,8 @@ public class Spaceship implements Serializable{
         Vector2 force = new Vector2(0, 0);
         for(ShipPart[] row: shipParts) {
             for(ShipPart part: row) {
-                if(part != null && part instanceof Engine && 
+                if(part != null && part instanceof Engine &&
+                        fuel.containsKey(((Engine)part).getFuelType()) &&
                         ((Engine)part).getFuelUsage() * delta <
                         fuel.get(((Engine)part).getFuelType()) -
                         consumedFuel.get(((Engine)part).getFuelType())) {

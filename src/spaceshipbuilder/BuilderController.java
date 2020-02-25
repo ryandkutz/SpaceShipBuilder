@@ -6,18 +6,18 @@
 package spaceshipbuilder;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.MenuItem;
+import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -39,6 +39,7 @@ public class BuilderController implements Initializable {
     Spaceship ship;
     ShipPart part;
     @FXML private BorderPane bp;
+    @FXML private GridPane gp;
 
     /**
      * Initializes the controller class.
@@ -49,7 +50,7 @@ public class BuilderController implements Initializable {
         part = new ShipPart();
         for(int r = 0; r < 5; r++) {
             for(int c = 0; c < 5; c++) {
-                ship.addPart(r, c, part);
+                ship.addPart(r, c, new ShipPart());
             }
         }
     }
@@ -61,10 +62,15 @@ public class BuilderController implements Initializable {
         ImageView view = ((ImageView)(click).getChildren().get(0));
         if(part == null) {
             view.setImage(null);
-            ship.addPart(row, col, part);
         } else {
-            view.setImage(part.sprite());
-            ship.addPart(row, col, part);
+            view.setImage(new Image(part.sprite()));
+        }
+        if(part instanceof Engine) {
+            ship.addPart(row, col, new Engine());
+        } else if(part instanceof FuelTank) {
+            ship.addPart(row, col, new FuelTank("default", 1, 1));
+        } else {
+            ship.addPart(row, col, new ShipPart());
         }
     }
     
@@ -86,12 +92,46 @@ public class BuilderController implements Initializable {
     public void saveAs() {
         Stage stage = (Stage) bp.getScene().getWindow();
         FileChooser chooser = new FileChooser();
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Space Ships", "*.ship");
+        chooser.getExtensionFilters().add(filter);
         File file = chooser.showSaveDialog(stage);
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+            FileOutputStream fos = new FileOutputStream(file);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(ship);
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+    
+    public void open() {
+        Stage stage = (Stage) bp.getScene().getWindow();
+        FileChooser chooser = new FileChooser();
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Space Ships", "*.ship");
+        chooser.getExtensionFilters().add(filter);
+        File file = chooser.showOpenDialog(stage);
+        try {
+            FileInputStream in = new FileInputStream(file);
+            ObjectInputStream obj = new ObjectInputStream(in);
+            ship = (Spaceship)obj.readObject();
+            int row = 0;
+            for(ShipPart[] parts : ship.getShipParts()) {
+                int col = 0;
+                for(ShipPart p : parts) {
+                    for(Node n : gp.getChildren()) {
+                        if(GridPane.getRowIndex(n) == row && GridPane.getColumnIndex(n) == col) {
+                            ImageView view = (ImageView)(((StackPane)n).getChildren().get(0));
+                            if(p != null)
+                                view.setImage(new Image(p.sprite()));
+                            else view.setImage(null);
+                        }
+                    }
+                    col++;
+                }
+                row++;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(BuilderController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
