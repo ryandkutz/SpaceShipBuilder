@@ -17,6 +17,8 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -38,8 +40,14 @@ public class BuilderController implements Initializable {
     
     Spaceship ship;
     ShipPart part;
+    private String type;
     @FXML private BorderPane bp;
     @FXML private GridPane gp;
+    @FXML private Slider otherSlider;
+    @FXML private Label partPrice;
+    @FXML private Label partMass;
+    @FXML private Label shipCost;
+    @FXML private Label otherLabel;
 
     /**
      * Initializes the controller class.
@@ -48,6 +56,7 @@ public class BuilderController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         ship = new Spaceship(5, 5, "");
         part = new ShipPart();
+        type = "default";
         for(int r = 0; r < 5; r++) {
             for(int c = 0; c < 5; c++) {
                 ship.addPart(r, c, new ShipPart());
@@ -135,5 +144,9 @@ public class BuilderController implements Initializable {
         } catch (Exception ex) {
             Logger.getLogger(BuilderController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void sliderChange() {
+        double val = otherSlider.getValue();
     }
 }
