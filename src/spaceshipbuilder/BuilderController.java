@@ -5,6 +5,7 @@
  */
 package spaceshipbuilder;
 
+import com.badlogic.gdx.math.Vector2;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -40,14 +41,13 @@ public class BuilderController implements Initializable {
     
     Spaceship ship;
     ShipPart part;
-    private String type;
     @FXML private BorderPane bp;
     @FXML private GridPane gp;
     @FXML private Slider otherSlider;
     @FXML private Label partPrice;
     @FXML private Label partMass;
     @FXML private Label shipCost;
-    @FXML private Label otherLabel;
+    @FXML private Label amountLabel;
 
     /**
      * Initializes the controller class.
@@ -56,7 +56,6 @@ public class BuilderController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         ship = new Spaceship(5, 5, "");
         part = new ShipPart();
-        type = "default";
         for(int r = 0; r < 5; r++) {
             for(int c = 0; c < 5; c++) {
                 ship.addPart(r, c, new ShipPart());
@@ -91,6 +90,33 @@ public class BuilderController implements Initializable {
     
     public void setEngine() {
         part = new Engine();
+    }
+    
+    public void setNuclear() {
+        if(part instanceof Engine) {
+            ((Engine)part).setType("nuclear");
+        }
+        if(part instanceof FuelTank) {
+            ((FuelTank)part).setType("nuclear");
+        }
+    }
+    
+    public void setCoal() {
+        if(part instanceof Engine) {
+            ((Engine)part).setType("coal");
+        }
+        if(part instanceof FuelTank) {
+            ((FuelTank)part).setType("coal");
+        }
+    }
+    
+    public void setSid() {
+        if(part instanceof Engine) {
+            ((Engine)part).setType("sidium");
+        }
+        if(part instanceof FuelTank) {
+            ((FuelTank)part).setType("sidium");
+        }
     }
     
     public void setTank() {
@@ -147,6 +173,19 @@ public class BuilderController implements Initializable {
     }
     
     public void sliderChange() {
+        double max = otherSlider.getMax();
         double val = otherSlider.getValue();
+        if(part instanceof Engine) {
+            double amount = (val / max) * 1000;
+            amountLabel.setText("Thrust: " + amount + "N");
+            ((Engine)part).setThrust(new Vector2(0, (float)amount));
+            ((Engine)part).setFuelUsage((float)amount / 1000);
+            
+        }
+        if(part instanceof FuelTank) {
+            double amount = (val / max) * 4;
+            amountLabel.setText("Fuel: " + amount + "m^2");
+            ((FuelTank)part).setAmount((float)amount);
+        }
     }
 }

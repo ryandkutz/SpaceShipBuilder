@@ -12,8 +12,12 @@ package utils;
 public class FuelTypes {
     public static float density(String type) {
         //kg/m^2
-        if(type.equals("default")) return 1;
-        if(type.equals("nuclear")) return 2;
-        return -1;
+        switch(type) {
+            case "default" : return 1;
+            case "nuclear" : return 5;
+            case "coal" : return 1;
+            case "sidium" : return 10;
+            default : return -1;
+        }
     }
 }

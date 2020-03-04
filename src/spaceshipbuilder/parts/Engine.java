@@ -73,4 +73,17 @@ public class Engine extends ShipPart {
         return fuelType;
     }
     
+    public void setType(String type) {
+        fuelType = type;
+    }
+
+    public void setThrust(Vector2 thrust) {
+        this.thrust = thrust;
+    }
+
+    public void setFuelUsage(float fuelUsage) {
+        this.fuelUsage = fuelUsage;
+    }
+    
+    
 }
