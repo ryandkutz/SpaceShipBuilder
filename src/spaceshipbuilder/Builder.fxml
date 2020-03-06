@@ -8,6 +8,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -18,7 +19,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="638.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spaceshipbuilder.BuilderController">
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="638.0" xmlns="http://javafx.com/javafx/8.0.211" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spaceshipbuilder.BuilderController">
    <right>
       <Accordion BorderPane.alignment="CENTER">
         <panes>
@@ -45,8 +46,10 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Slider fx:id="otherSlider" layoutX="84.0" layoutY="14.0" onMouseDragReleased="#sliderChange" prefHeight="14.0" prefWidth="212.0" />
-                        <Label fx:id="amountLabel" layoutX="6.0" layoutY="13.0" prefHeight="17.0" prefWidth="52.0" />
+                        <Slider fx:id="otherSlider" layoutX="114.0" layoutY="14.0" prefHeight="14.0" prefWidth="182.0" />
+                        <Label fx:id="amountLabel" layoutX="6.0" layoutY="13.0" prefHeight="17.0" prefWidth="102.0" />
+                        <Label layoutX="14.0" layoutY="53.0" prefHeight="17.0" prefWidth="55.0" text="Rotation: " />
+                        <TextField fx:id="rotationField" layoutX="108.0" layoutY="49.0" onAction="#setRotation" />
                      </children>
                   </AnchorPane>
                </content>

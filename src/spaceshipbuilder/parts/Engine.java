@@ -85,5 +85,11 @@ public class Engine extends ShipPart {
         this.fuelUsage = fuelUsage;
     }
     
+    @Override
+    public void setRotation(float rotation) {
+        super.setRotation(rotation);
+        thrust = new Vector2(0, thrust.len());
+        thrust.rotate(rotation);
+    }
     
 }

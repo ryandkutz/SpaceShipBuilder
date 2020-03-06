@@ -20,19 +20,31 @@ public class ShipPart implements Serializable {
     //Measured from center of the ship to center of the part in pixels, where each part is 50 pixels.
     private Vector2 position;
     private float mass;
+    private float rotation;
     private String sprite;
     
     public ShipPart() {
+        rotation = 0;
         position = new Vector2(0, 0);
         mass = 10;
         sprite = "Assets/Block.png";
     }
 
     public ShipPart(float mass) {
+        rotation = 0;
         position = new Vector2(0, 0);
         this.mass = mass;
         sprite = "Assets/Block.png";
     }
+
+    public ShipPart(float mass, float rotation) {
+        this.position = new Vector2();
+        this.mass = mass;
+        this.rotation = rotation;
+        this.sprite = "Assets/Block.png";
+    }
+    
+    
     
     public float getMomentOfInertia(float massX, float massY) {
         //Uses moment of inertia euation for a plane and parallel axis theorem.
@@ -72,5 +84,14 @@ public class ShipPart implements Serializable {
     public void setSprite(String i) {
         sprite = i;
     }
+
+    public float getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
+    }
+    
     
 }

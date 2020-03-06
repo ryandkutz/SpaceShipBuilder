@@ -8,25 +8,18 @@ package spaceshipbuilder;
 import com.badlogic.gdx.math.Vector2;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import spaceshipbuilder.parts.Engine;
-import spaceshipbuilder.parts.FuelTank;
 import spaceshipbuilder.parts.ShipPart;
 
 /**
@@ -54,11 +47,12 @@ public class Game {
         scene = canvas.getScene();
         
         FileChooser chooser = new FileChooser();
+        chooser.setInitialDirectory(new File("./ships"));
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Space Ships", "*.ship");
         chooser.getExtensionFilters().add(filter);
         File file = chooser.showOpenDialog(scene.getWindow());
         FileInputStream in;
-        if(file != null) {
+        if(file != null && !file.equals("")) {
             try {
                 in = new FileInputStream(file);
                 ObjectInputStream obj = new ObjectInputStream(in);
@@ -89,8 +83,8 @@ public class Game {
         ctx.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
         for(double i = -Math.ceil(canvas.getWidth() / 800) * 400 - x % 400 - 400; i < canvas.getWidth(); i += 400) {
             for(double j = -Math.ceil(canvas.getHeight() / 800) * 400 + y % 400 - 400; j < canvas.getHeight(); j += 400) {
-                if (y - j > 0) ctx.drawImage(sprites.get("clouds"), i, j);
-                else if(y - j > -400) ctx.drawImage(sprites.get("grass"), i, j);
+                if (y - j >= 400) ctx.drawImage(sprites.get("clouds"), i, j);
+                else if(y - j >= 0) ctx.drawImage(sprites.get("grass"), i, j);
                 else ctx.drawImage(sprites.get("dirt"), i, j);
             }
         }
@@ -103,12 +97,19 @@ public class Game {
         double centerX = ctx.getCanvas().getWidth() / 2;
         double centerY = ctx.getCanvas().getHeight() / 2;
         double SIZE = 50;
-        ctx.translate(centerX, centerY);
-        ctx.rotate(ship.getRotation());
         for(ShipPart[] col : parts) {
             for(ShipPart p : col) {
                 if(p != null) {
-                    ctx.drawImage(sprites.get(p.sprite()), p.getX() - SIZE / 2, p.getY() - SIZE / 2);
+                    ctx.translate(centerX, centerY);
+                    ctx.rotate(ship.getRotation());
+                    ctx.translate(p.getX() - SIZE / 2, p.getY() - SIZE / 2);
+                    ctx.rotate(p.getRotation());
+                    ctx.drawImage(sprites.get(p.sprite()), 0, 0);
+                    ctx.rotate(-p.getRotation());
+                    ctx.translate(-p.getX() + SIZE / 2, -p.getY() + SIZE / 2);
+                    ctx.rotate(-ship.getRotation());
+                    ctx.translate(-centerX, -centerY);
+                    
                 }
             }
         }

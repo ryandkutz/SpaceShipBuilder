@@ -16,9 +16,11 @@ public class FuelTank extends ShipPart {
     private String type;
     //In meters^2
     private float amount;
+    private float containerMass;
 
     public FuelTank(String type, float amount, float containerMass) {
         super((density(type) * amount) + containerMass);
+        this.containerMass = containerMass;
         this.type = type;
         setAmount(amount);
         setSprite("Assets/FuelTank.png");
@@ -41,4 +43,10 @@ public class FuelTank extends ShipPart {
             this.amount = 4;
         else this.amount = amount;
     }
+
+    public float getContainerMass() {
+        return containerMass;
+    }
+    
+    
 }
