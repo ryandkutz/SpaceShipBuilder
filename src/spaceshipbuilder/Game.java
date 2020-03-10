@@ -8,9 +8,12 @@ package spaceshipbuilder;
 import com.badlogic.gdx.math.Vector2;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -34,6 +37,7 @@ public class Game {
     private Spaceship ship;
     private double x, y = 0;
     private HashMap<String, Image> sprites;
+    private TreeSet<Spaceship> scores;
     
 
     public Game(Canvas canvas) {
@@ -102,11 +106,13 @@ public class Game {
                 if(p != null) {
                     ctx.translate(centerX, centerY);
                     ctx.rotate(ship.getRotation());
-                    ctx.translate(p.getX() - SIZE / 2, p.getY() - SIZE / 2);
+                    ctx.translate(p.getX(), p.getY());
                     ctx.rotate(p.getRotation());
+                    ctx.translate(-SIZE / 2, -SIZE / 2);
                     ctx.drawImage(sprites.get(p.sprite()), 0, 0);
+                    ctx.translate(SIZE / 2, SIZE / 2);
                     ctx.rotate(-p.getRotation());
-                    ctx.translate(-p.getX() + SIZE / 2, -p.getY() + SIZE / 2);
+                    ctx.translate(-p.getX(), -p.getY());
                     ctx.rotate(-ship.getRotation());
                     ctx.translate(-centerX, -centerY);
                     
@@ -157,11 +163,25 @@ public class Game {
                 drawBackground();
                 drawShip();
                 drawFuel();
+                if(ship.getY() < 0) stop();
                 ctx.setFill(Color.BLACK);
                 ctx.fillText(Double.toString(fps), 10, 10);
             }
             
         };
         h.start();
+        scores.add(ship);
     }
+    
+    public void saveScores() {
+        File file = new File("scores");
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(scores);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
 }

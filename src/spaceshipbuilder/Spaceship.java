@@ -6,6 +6,9 @@
 package spaceshipbuilder;
 
 import com.badlogic.gdx.math.Vector2;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.TreeMap;
 import spaceshipbuilder.parts.*;
@@ -18,7 +21,7 @@ import static utils.Units.seconds;
  *
  * @author Gomez_866923
  */
-public class Spaceship implements Serializable{
+public class Spaceship implements Serializable, Comparable<Spaceship>{
     private ShipPart[][] shipParts;
     private Vector2 position;
     private Vector2 velocity;
@@ -27,6 +30,7 @@ public class Spaceship implements Serializable{
     private float rotationalVelocity;
     private float rotation;
     private float mass;
+    private float recordHeight;
     private String name;
 
     public Spaceship(int rows, int cols, String name) {
@@ -38,6 +42,7 @@ public class Spaceship implements Serializable{
         fuel = new TreeMap<>();
         consumedFuel = new TreeMap<>();
         mass = getMass();
+        recordHeight = 0;
     }
     
     public Spaceship() {
@@ -49,6 +54,7 @@ public class Spaceship implements Serializable{
         fuel = new TreeMap<>();
         consumedFuel = new TreeMap<>();
         mass = getMass();
+        recordHeight = 0;
     }
     
     public void addPart(int r, int c, ShipPart p) {
@@ -155,6 +161,10 @@ public class Spaceship implements Serializable{
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public TreeMap<String, Float> getFuel() {
         return fuel;
     }
@@ -162,6 +172,7 @@ public class Spaceship implements Serializable{
     public TreeMap<String, Float> getConsumedFuel() {
         return consumedFuel;
     }
+    
     
     public void updateShip(float delta) {
         delta = seconds(delta);
@@ -195,5 +206,19 @@ public class Spaceship implements Serializable{
             velocity.y = 0;
         }
         position.add(velocity.x * delta, velocity.y * delta);
+        if(position.y > recordHeight) recordHeight = position.y;
     }
+
+    @Override
+    public int compareTo(Spaceship o) {
+        if(recordHeight > o.recordHeight) return 1;
+        else if(recordHeight < o.recordHeight) return -1;
+        return name.compareTo(o.name);
+    }
+
+    public float getRecordHeight() {
+        return recordHeight;
+    }
+    
+    
 }

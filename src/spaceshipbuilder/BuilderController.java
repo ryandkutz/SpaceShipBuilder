@@ -157,6 +157,7 @@ public class BuilderController implements Initializable {
         try {
             FileOutputStream fos = new FileOutputStream(file);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
+            ship.setName(file.getName());
             oos.writeObject(ship);
         } catch (Exception ex) {
             ex.printStackTrace();
