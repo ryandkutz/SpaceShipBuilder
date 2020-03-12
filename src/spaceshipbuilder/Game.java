@@ -18,6 +18,7 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -49,6 +50,8 @@ public class Game {
         this.canvas = canvas;
         ctx = canvas.getGraphicsContext2D();
         scene = canvas.getScene();
+        scores = new TreeSet();
+        open();
         
         FileChooser chooser = new FileChooser();
         chooser.setInitialDirectory(new File("./ships"));
@@ -163,24 +166,38 @@ public class Game {
                 drawBackground();
                 drawShip();
                 drawFuel();
-                if(ship.getY() < 0) stop();
+                if(ship.getY() < 0) {
+                    scores.add(ship);
+                    saveScores();
+                    stop();
+                }
                 ctx.setFill(Color.BLACK);
                 ctx.fillText(Double.toString(fps), 10, 10);
             }
             
         };
         h.start();
-        scores.add(ship);
     }
     
     public void saveScores() {
-        File file = new File("scores");
+        File file = new File("./scores/scores.sc");
         try {
             FileOutputStream fos = new FileOutputStream(file);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(scores);
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+    
+    public void open() {
+    
+        try {
+            FileInputStream in = new FileInputStream("./scores/scores.sc");
+            ObjectInputStream obj = new ObjectInputStream(in);
+            scores = (TreeSet<Spaceship>)obj.readObject();
+        } catch (Exception ex) {
+            System.out.println(ex.getStackTrace());
         }
     }
     

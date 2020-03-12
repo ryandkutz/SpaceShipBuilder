@@ -211,8 +211,8 @@ public class Spaceship implements Serializable, Comparable<Spaceship>{
 
     @Override
     public int compareTo(Spaceship o) {
-        if(recordHeight > o.recordHeight) return 1;
-        else if(recordHeight < o.recordHeight) return -1;
+        if(recordHeight > o.recordHeight) return -1;
+        else if(recordHeight < o.recordHeight) return 1;
         return name.compareTo(o.name);
     }
 

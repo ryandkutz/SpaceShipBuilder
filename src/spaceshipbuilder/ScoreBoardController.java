@@ -7,7 +7,9 @@ package spaceshipbuilder;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
@@ -16,6 +18,7 @@ import java.util.TreeSet;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
@@ -26,6 +29,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class ScoreBoardController implements Initializable {
 
     private TreeSet<Spaceship> scores;
+    @FXML private TableView table;
     @FXML private TableColumn names;
     @FXML private TableColumn heights;
     /**
@@ -37,17 +41,22 @@ public class ScoreBoardController implements Initializable {
     }    
     
     public void open() {
-    
+        names.setCellValueFactory(new PropertyValueFactory<>("name"));
+        heights.setCellValueFactory(new PropertyValueFactory<>("recordHeight"));
         try {
-            FileInputStream in = new FileInputStream("scores");
+            FileInputStream in = new FileInputStream(new File("./scores/scores.sc"));
             ObjectInputStream obj = new ObjectInputStream(in);
             scores = (TreeSet<Spaceship>)obj.readObject();
             for(Spaceship s : scores) {
-                names.setCellValueFactory(new PropertyValueFactory<>(s.getName()));
-                heights.setCellValueFactory(new PropertyValueFactory<>(Float.toString(s.getRecordHeight())));
+                table.getItems().add(s);
             }
-        } catch (Exception ex) {
+        } catch (FileNotFoundException ex) {
             System.out.println(ex.getStackTrace());
+            System.out.println("Opps");
+        } catch(IOException e) {
+            System.out.println(e.getCause());
+        } catch(ClassNotFoundException ex) {
+            System.out.println(ex.getCause());
         }
     }
     

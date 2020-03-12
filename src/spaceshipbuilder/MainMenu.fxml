@@ -9,5 +9,6 @@
       <Button layoutX="248.0" layoutY="188.0" mnemonicParsing="false" onAction="#startGame" text="Launch a Ship!" />
       <CheckBox fx:id="FullScreen" layoutX="248.0" layoutY="138.0" mnemonicParsing="false" text="Full Screen" />
       <Button layoutX="254.0" layoutY="242.0" mnemonicParsing="false" onAction="#startBuilder" text="Build a Ship!" />
+      <Button layoutX="255.0" layoutY="292.0" mnemonicParsing="false" onAction="#scoreBoard" text="Score Board" />
    </children>
 </AnchorPane>

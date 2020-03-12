@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -65,6 +66,20 @@ public class MainMenuController implements Initializable {
         stage.setTitle("Build!");
         stage.setScene(scene);
         stage.show();
+    }
+    
+    public void scoreBoard() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ScoreBoard.fxml"));
+        ScoreBoardController c = new ScoreBoardController();
+        loader.setController(c);
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        
+        stage.setTitle("Scores");
+        stage.setScene(scene);
+        stage.show();
+        
     }
     
 }
